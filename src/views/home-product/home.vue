@@ -347,15 +347,15 @@
       addCart(data) {
         this.listCHart.push(data)
       },
-          searching(){
-        console.log(this.search)
-        axios.get(`http://localhost:2153/product/search?name=${this.search}`)
-        .then(res => {
-        this.product = res.data
-      }).catch ((err) => {
-        console.log(err)
-      })
-    },
+    //       searching(){
+    //     console.log(this.search)
+    //     axios.get(`http://localhost:2153/product/search?name=${this.search}`)
+    //     .then(res => {
+    //     this.product = res.data
+    //   }).catch ((err) => {
+    //     console.log(err)
+    //   })
+    // },
       
     }
   }
