@@ -1,6 +1,7 @@
 <template>
   <div class="Home">
     <div class="wrapper">
+      <!-- Header Menu -->
       <div class="header">
         <div class="icon-menu"><svg width="36" height="35" viewBox="0 0 36 35" fill="none"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -46,7 +47,8 @@
       </div>
     </div>
     <!-- header cart -->
-      <div class="wrapper" id="cart">
+    <div class="wrapper-allcart">
+      <div class=" overflow-auto" id="cart">
         <div class="cart-customer">
           <div v-if="listCHart.length == 0">
             <div class="cart"><img src="@/assets/food-and-restaurant.png"></div>
@@ -63,28 +65,38 @@
             </div>
           </div>
           <!-- cart -->
-            <div class="wrapper-cart" v-for="items in listCHart" :key="items"><img :src="items.IMG" id="cart-img">
-              <div class="div1">
-                <h4> {{ items.NAME_PRODUCT}}
-                </h4><span> {{ items.PRICE }}
-                </span>
-              </div>
-              <div class="div2">
-                <b-button-group style="margin-bottom:10px;">
-                  <b-button variant="success" style="font-weight: 900;" v-on:click='value -= 1'>-</b-button>
-                  <div class="form-control total" value="1"> {{ value }}
-                  </div>
-                  <b-button variant="success" style="font-weight: 900;" v-on:click='value += 1'>+</b-button>
-                </b-button-group>
-              </div>
+            <div class="wrapper-cart" v-for="items in listCHart" :key="items">
+              <div class="cart1">
+                  <img :src="items.IMG" id="cart-img">
+             </div>
+             <div class="cart2">
+                <cart2-1>
+                   <h4 style="font-size:22px; text-align:left;"> {{ items.NAME_PRODUCT}} </h4> 
+                </cart2-1>
+                <div class="cart2-2">
+                    <b-button-group >
+                      <b-button variant="success" style="font-weight: 900;" v-on:click='value -= 1'>-</b-button>
+                      <div class="form-control total" value="1"> {{ value }} </div>
+                      <b-button variant="success" style="font-weight: 900;" v-on:click='value += 1'>+</b-button>
+                    </b-button-group>
+                      <h5 style="font-size:18px;margin-left: 50px;">{{ items.PRICE }}</h5>
+                </div>
+             </div>
             </div>
         </div>
-        <div class="checkout">
+      </div>
+      <div class="total-price">
+       <h5>Total</h5> 
+       <h4>30000</h4>
+      </div>
+        <div class="checkout" v-if="listCHart.length == 0" hidden>
+          </div>
+          <div class="checkout" v-else>
           <b-button variant="outline-primary" style="margin-bottom:15px;font-size:20px;font-weight:700;">CheckOut
           </b-button>
           <b-button variant="danger" @click="clean" style="font-size:20px;font-weight:700;">Cancel</b-button>
-        </div>
-      </div>
+          </div>      
+    </div>
       <!-- sidebar -->
         <div class="wrapper" id="sidebar">
           <div class="sidebar">
@@ -149,7 +161,7 @@
                 <h5 style="margin-top:18px;">Category</h5>
                 <div id="input4">
                   <b-form-select v-model="form.CATEGORY" :options="options" v-if="selected == null">
-                    
+
                   </b-form-select>
                 </div>
               </div>
@@ -215,12 +227,10 @@
   </div>
 </template>
 <script>
-  
   import Product from '../../components/product'
   import axios from 'axios'
 
   export default {
-
     name: 'product',
     components: {
       Product,
@@ -291,7 +301,7 @@
     methods: {
       load() {
         axios.get(process.env.VUE_APP_URL).then(res => {
-            this.product = res.data 
+            this.product = res.data
           }
         ).catch((err) => {
             alert('Data Error!' + err)
@@ -299,11 +309,11 @@
         )
       },
       save() {
-        axios.post(process.env.VUE_APP_URL, 
+        axios.post(process.env.VUE_APP_URL,
         this.form).then((res) => {
-            alert('Product Sucessfully Saved!', res) 
-            this.load() 
-            this.form = [] 
+            alert('Product Sucessfully Saved!', res)
+            this.load()
+            this.form = []
             this.clean()
           }
         ).catch(err => {
@@ -311,11 +321,12 @@
           }
         )
       },
-      Update(){ 
+      Update(){
         axios.put(process.env.VUE_APP_URL, {
           ID: this.update.ID,
           NAME_PRODUCT: this.update.NAME_PRODUCT,
           PRICE: this.update.PRICE,
+          IMG : this.update.IMG,
           CATEGORY: this.update.CATEGORY
         })
         .then((res) => {
@@ -329,20 +340,23 @@
       })
     },
      Delete(){
-      axios.delete(`http://localhost:2153/product/delete/${this.deleteID}`) 
+      axios.delete(`${process.env.VUE_APP_URL}/delete/${this.deleteID}`)
         .then(res => {
-          console.log(res)
-          alert("Success delete product")
+          alert("Success delete product", res)
+          this.load()
+          this.form = []
+          this.clean()
         })
         .catch(err => {
           alert ('delete product errorr!', err)
         })
     },
       clean() {
-        this.$bvModal.hide('bv-modal-AddData') 
-        this.$bvModal.hide('bv-modal-UpdateData') 
-        this.$bvModal.hide('bv-modal-DeleteData') 
+        this.$bvModal.hide('bv-modal-AddData')
+        this.$bvModal.hide('bv-modal-UpdateData')
+        this.$bvModal.hide('bv-modal-DeleteData')
         this.listCHart = []
+        this.form = []
       },
       addCart(data) {
         this.listCHart.push(data)
@@ -356,9 +370,9 @@
     //     console.log(err)
     //   })
     // },
-      
+
     }
-  }
+}
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
@@ -454,18 +468,19 @@
     .sidebar-action img {
       padding: 1.4em;
     }
-
-    #cart {
-      width: 21.5em;
-      height: 90em;
+    .wrapper-allcart {
+      width: 100%;
+      height: 100%;
       margin: 4.8em auto auto 58.8em;
       position: fixed;
       background-color: white;
       border-radius: 8px;
       box-shadow: -10px 10px rgba(144, 144, 144, 0.212);
-      z-index: 1;
     }
-
+    #cart {
+      width: 21.7em;
+      height: 60%;
+    }
     .cart-customer {
       display: flex;
       flex-direction: column;
@@ -473,49 +488,54 @@
       align-items: center;
       text-align: center;
     }
-
     /* MODEL STYLING */
     #bv-modal-AddData h5 {
       font-family: sans-serif;
     }
 
-    #bv-modal-AddData .modal-body #input1,
-    #input2,
-    #input3,
-    #input4 {
+    #bv-modal-AddData .modal-body #input1, #input2, #input3, #input4 {
       box-sizing: border-box;
       box-shadow: 0px 4px 6px rgba(228, 214, 214, 10);
     }
-
+    /* cart style */
     #row {
       width: 80%;
       margin-left: 5em;
       padding-top: 4.5em;
     }
-
-    #UpDown {
-      margin-top: 2em;
+    /* atur cart */
+    .wrapper-cart .cart2 {
+      padding-top: 20px;
     }
-
-    .cart-customer {
-      width: 100%;
-      height: 30%;
-      overflow: auto;
-    }
-
-    .wrapper-cart .div1 {
+    .wrapper-cart .cart2-2 {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-items: center;
+      align-items: center; 
     }
-
+    .wrapper-cart {
+      display: flex;
+      flex-direction: row;
+      width: 20%;
+      justify-content: center;
+      align-items: flex-start;
+    }
     .wrapper-cart img {
-      width: 12em;
+      width: 6em;
+      margin-top: 20px ;
+      margin-right: 12px;
     }
-
+    .total-price {
+      display: flex;
+      flex-direction: row;
+      margin-left: 30px;
+      text-align: center;
+    }
     .checkout {
       display: flex;
       flex-direction: column;
       width: 18em;
-      margin: 30px auto;
+      margin-top: 1em;
+      margin-left: 30px;
     }
   </style>
