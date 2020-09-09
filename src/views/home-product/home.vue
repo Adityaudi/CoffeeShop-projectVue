@@ -18,22 +18,9 @@
           <h2>Foods Items</h2>
         </div>
         <div class="icon-search">
-          <div><img src="@/assets/magnifying-glass.png" id="show-btn" @click="$bvModal.show('bv-modal-example')">
-            <b-modal id="bv-modal-example" hide-footer><template v-slot:modal-title style="border: 10px solid black;">
-                <h2>Product <code>Search</code></h2>
-              </template>
-              <div class=" text-center">
-                <b-form-group>
-                  <b-input v-model="search" placeholder="Search Product" style="margin-bottom:1em;margin-top:1em;">
-                  </b-input>
-                  <b-form-radio-group v-model="radio" :options="optionRadio" name="radio-inline"
-                    style="margin-bottom:2em;"></b-form-radio-group>
-                </b-form-group>
-              </div>
-              <b-button class="mt-3" variant="primary" block @click="searching()">Search
-              </b-button>
-            </b-modal>
-          </div>
+          <form>
+               <input v-model="search"  type="text" name="search" placeholder="Search.." @input="searching()" >
+        </form>
         </div>
       </div>
     </div>
@@ -65,165 +52,185 @@
             </div>
           </div>
           <!-- cart -->
-            <div class="wrapper-cart" v-for="items in listCHart" :key="items">
-              <div class="cart1">
-                  <img :src="items.IMG" id="cart-img">
-             </div>
-             <div class="cart2">
-                <cart2-1>
-                   <h4 style="font-size:22px; text-align:left;"> {{ items.NAME_PRODUCT}} </h4> 
-                </cart2-1>
-                <div class="cart2-2">
-                    <b-button-group >
-                      <b-button variant="success" style="font-weight: 900;" v-on:click='value -= 1'>-</b-button>
-                      <div class="form-control total" value="1"> {{ value }} </div>
-                      <b-button variant="success" style="font-weight: 900;" v-on:click='value += 1'>+</b-button>
-                    </b-button-group>
-                      <h5 style="font-size:18px;margin-left: 50px;">{{ items.PRICE }}</h5>
-                </div>
-             </div>
+          <div class="wrapper-cart" v-for="items in listCHart" :key="items">
+            <div class="cart1">
+              <img :src="items.IMG" id="cart-img">
             </div>
+            <div class="cart2">
+              <cart2-1>
+                <h4 style="font-size:22px; text-align:left;"> {{ items.NAME_PRODUCT}} </h4>
+              </cart2-1>
+              <div class="cart2-2">
+                <b-button-group>
+                  <b-button variant="success" style="font-weight: 900;" v-on:click='value -= 1'>-</b-button>
+                  <div class="form-control total" value="1"> {{ value }} </div>
+                  <b-button variant="success" style="font-weight: 900;" v-on:click='value += 1'>+</b-button>
+                </b-button-group>
+                <h5 style="font-size:18px;margin-left: 50px;">{{ items.PRICE }}</h5>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="total-price">
-       <h5>Total</h5> 
-       <h4>30000</h4>
+      <!-- CHECKOUT BUTTON -->
+      <div class="total-price" v-if="listCHart.length == 0">
       </div>
-        <div class="checkout" v-if="listCHart.length == 0" hidden>
-          </div>
-          <div class="checkout" v-else>
-          <b-button variant="outline-primary" style="margin-bottom:15px;font-size:20px;font-weight:700;">CheckOut
-          </b-button>
-          <b-button variant="danger" @click="clean" style="font-size:20px;font-weight:700;">Cancel</b-button>
-          </div>      
+      <div class="total-price" v-else>
+        <h5>Total</h5>
+        <h4 style="margin-left:7em;">30000</h4>
+      </div>
+      <div class="checkout" v-if="listCHart.length == 0" hidden>
+      </div>
+      <div class="checkout" v-else>
+        <b-button variant="outline-primary" @click="$bvModal.show('bv-modal-CheckOut')" style="margin-bottom:15px;font-size:20px;font-weight:700;">CheckOut
+        </b-button>
+        <b-button variant="danger" @click="clean" style="font-size:20px;font-weight:700;">Cancel</b-button>
+      </div>
     </div>
-      <!-- sidebar -->
-        <div class="wrapper" id="sidebar">
-          <div class="sidebar">
-            <div class="sidebar-action">
-              <div class="icon-menus"> <a href="http://localhost:8080/"><img src="@/assets/fork.png"><span>Menus</span></a></div>
-              <div class="icon-history"> <a href="http://localhost:8080/#/history"><img src="@/assets/clipboard.png"><span>History</span></a></div>
-              <div><img src="@/assets/add.png" @click="$bvModal.show('CRUD')">
-                <b-modal id="CRUD" hide-footer header-border-variant="primary"><template v-slot:modal-title>
-                    <h3>CoffeeShop <code>CRUD</code></h3>
-                  </template>
-                  <div class="d-block text-center">
-                    <h2>Hello welcome back ! </h2><br>
-                    <p style="float:left;">Chouse you needed :</p>
-                  </div>
-                  <b-button variant="primary" class="mt-3" block @click="$bvModal.show('bv-modal-AddData')">
-                    <h5>ADD PRODUCT</h5>
-                  </b-button>
-                  <b-button variant="outline-primary" class="mt-3" block @click="$bvModal.show('bv-modal-UpdateData')">
-                    <h5>UPDATE PRODUCT</h5>
-                  </b-button>
-                  <b-button variant="outline-primary" class="mt-3" block @click="$bvModal.show('bv-modal-DeleteData')">
-                    <h5>DELETE PRODUCT</h5>
-                  </b-button>
-                </b-modal>
+    <!-- SIDEBAR ACTION -->
+    <div class="wrapper" id="sidebar">
+      <div class="sidebar">
+        <div class="sidebar-action">
+          <div class="icon-menus"> <a href="http://localhost:8081/"><img src="@/assets/fork.png"><span>Menus</span></a>
+          </div>
+                <!-- HISTORY -->
+          <div class="icon-history"> <a href="http://localhost:8081/#/history"><img
+                src="@/assets/clipboard.png"><span>History</span></a></div>
+
+                <!-- MODAL C. R. U. D -->
+          <div><img src="@/assets/add.png" @click="$bvModal.show('CRUD')">
+            <b-modal id="CRUD" hide-footer header-border-variant="primary"><template v-slot:modal-title>
+                <h3>CoffeeShop <code>CRUD</code></h3>
+              </template>
+              <div class="d-block text-center">
+                <h2>Hello welcome back ! </h2><br>
+                <p style="float:left;">Chouse you needed :</p>
               </div>
-            </div>
+              <b-button variant="primary" class="mt-3" block @click="$bvModal.show('bv-modal-AddData')">
+                <h5>ADD PRODUCT</h5>
+              </b-button>
+              <b-button variant="outline-primary" class="mt-3" block @click="$bvModal.show('bv-modal-UpdateData')">
+                <h5>UPDATE PRODUCT</h5>
+              </b-button>
+              <b-button variant="outline-primary" class="mt-3" block @click="$bvModal.show('bv-modal-DeleteData')">
+                <h5>DELETE PRODUCT</h5>
+              </b-button>
+            </b-modal>
           </div>
         </div>
-        <!-- GET PRODUCT -->
-          <b-row id="row">
-            <div id="product" v-for="data in product" :key="data.ID" v-on:click="addCart(data)">
-              <Product :images="data.IMG" :names="data.NAME_PRODUCT" :price="data.PRICE" />
-            </div>
-          </b-row>
-          <!-- modal Add Data -->
-            <b-modal id="bv-modal-AddData" size="lg" header-bg-variant="primary" header-text-variant="white"
-              header-border-variant="dark" footer-border-variant="dark"><template v-slot:modal-title>
-                <h2>Add Product </h2>
-              </template><template v-slot:modal-footer>
-                <b-button variant="outline-danger" @click="clean">
-                  <h5>Cancel</h5>
-                </b-button>
-                <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="save">
-                  <h5 style="font-weight:700;">Add</h5>
-                </b-button>
-              </template>
-              <div class="modal-body">
-                <h5 style="margin-top:-10px;">Name</h5>
-                <b-form-input v-model="form.NAME_PRODUCT" id="input1" placeholder="name product"></b-form-input>
-                <h5 style="margin-top:18px;">Price</h5>
-                <div class="input-group mb-3" id="input3">
-                  <div class="input-group-prepend"><span class="input-group-text">Rp.</span></div>
-                  <b-form-input v-model="form.PRICE" placeholder="entry price product"></b-form-input>
-                </div>
-                <h5 style="margin-top:18px;">Image</h5>
-                <div class="input-group" id="input2">
-                  <div class="custom-file"><input v-model="form.IMG" type="text" class="form-control"
-                      id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" placeholder="link url-image"></div>
-                  <div class="input-group-append"><button class="btn btn-outline-primary" type="button"
-                      id="inputGroupFileAddon04">OK ! </button></div>
-                </div>
-                <h5 style="margin-top:18px;">Category</h5>
-                <div id="input4">
-                  <b-form-select v-model="form.CATEGORY" :options="options" v-if="selected == null">
+      </div>
+    </div>
+    <!-- GET PRODUCT -->
+    <b-row id="row">
+      <div id="product" v-for="data in product" :key="data.ID" v-on:click="addCart(data)">
+        <Product :images="data.IMG" :names="data.NAME_PRODUCT" :price="data.PRICE" />
+      </div>
+    </b-row>
+    <!-- modal Add Data -->
+    <b-modal id="bv-modal-AddData" size="lg" header-bg-variant="primary" header-text-variant="white"
+      header-border-variant="dark" footer-border-variant="dark"><template v-slot:modal-title>
+        <h2>Add Product </h2>
+      </template><template v-slot:modal-footer>
+        <b-button variant="outline-danger" @click="clean">
+          <h5>Cancel</h5>
+        </b-button>
+        <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="save">
+          <h5 style="font-weight:700;">Add</h5>
+        </b-button>
+      </template>
+      <div class="modal-body">
+        <h5 style="margin-top:-10px;">Name</h5>
+        <b-form-input v-model="form.NAME_PRODUCT" id="input1" placeholder="name product"></b-form-input>
+        <h5 style="margin-top:18px;">Price</h5>
+        <div class="input-group mb-3" id="input3">
+          <div class="input-group-prepend"><span class="input-group-text">Rp.</span></div>
+          <b-form-input v-model="form.PRICE" placeholder="entry price product"></b-form-input>
+        </div>
+        <h5 style="margin-top:18px;">Image</h5>
+        <div class="input-group" id="input2">
+          <div class="custom-file"><input v-model="form.IMG" type="text" class="form-control" id="inputGroupFile04"
+              aria-describedby="inputGroupFileAddon04" placeholder="link url-image"></div>
+          <div class="input-group-append"><button class="btn btn-outline-primary" type="button"
+              id="inputGroupFileAddon04">OK ! </button></div>
+        </div>
+        <h5 style="margin-top:18px;">Category</h5>
+        <div id="input4">
+          <b-form-select v-model="form.CATEGORY" :options="options" v-if="selected == null">
 
-                  </b-form-select>
-                </div>
-              </div>
-            </b-modal>
-            <!-- MODAL UPDATE PRODUCT -->
-              <b-modal id="bv-modal-UpdateData" size="lg" header-bg-variant="primary" header-text-variant="white"
-                header-border-variant="dark" footer-border-variant="dark"><template v-slot:modal-title>
-                  <h2>Update Product </h2>
-                </template><template v-slot:modal-footer>
-                  <b-button variant="outline-danger" @click="clean">
-                    <h5>Cancel</h5>
-                  </b-button>
-                  <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="Update">
-                    <h5 style="font-weight:700;">Update</h5>
-                  </b-button>
-                </template>
-                <div class="modal-body">
-                  <div class="input-group" id="input2"
-                    style="width: 40%; float:right; border:1px solid black; border-radius:5%;">
-                    <div class="custom-file">
-                      <b-form-input v-model="update.ID" placeholder="type id product"></b-form-input>
-                    </div>
-                    <div class="input-group-append"><button class="btn btn-outline-primary" type="button"
-                        >Search</button></div>
-                  </div>
-                  <h5 style="margin-top: 40px;">Name</h5>
-                  <b-form-input v-model="update.NAME_PRODUCT" id="input2" placeholder="name product"></b-form-input>
-                  <h5 style="margin-top:18px;">Price</h5>
-                  <div class="input-group mb-3" id="input3">
-                    <div class="input-group-prepend"><span class="input-group-text">Rp.</span></div>
-                    <b-form-input v-model="update.PRICE" placeholder="entry price product"></b-form-input>
-                  </div>
-                  <h5 style="margin-top:18px;">Image</h5>
-                  <div class="input-group" id="input2">
-                    <div class="custom-file"><input v-model="update.IMG" type="text" class="form-control"
-                        placeholder="link url-image"></div>
-                    <div class="input-group-append"><button class="btn btn-outline-primary" type="button">OK ! </button>
-                    </div>
-                  </div>
-                  <h5 style="margin-top:18px;">Category</h5>
-                  <div id="input4">
-                    <b-form-select v-model="update.CATEGORY" :options="options" v-if="selected == null">
-                      <h2> </h2>
-                    </b-form-select>
-                  </div>
-                </div>
-              </b-modal>
-              <!-- MODAL DELETE PRODUCT -->
-                <b-modal id="bv-modal-DeleteData" hide-footer header-bg-variant="primary" header-text-variant="white"
-                  header-border-variant="dark"><template v-slot:modal-title>
-                    <h4>Delete Product</h4>
-                  </template>
-                  <div class="d-block text-center">
-                    <b-input-group prepend="ID" class="mt-3">
-                      <b-form-input v-model="deleteID"></b-form-input>
-                    </b-input-group>
-                  </div>
-                  <b-button variant="outline-danger" class="mt-3" block @click="Delete"
-                    style="width:15em;display:block; margin:20px auto;">
-                    <h4>Delete </h4>
-                  </b-button>
-                </b-modal>
+          </b-form-select>
+        </div>
+      </div>
+    </b-modal>
+    <!-- MODAL UPDATE PRODUCT -->
+    <b-modal id="bv-modal-UpdateData" size="lg" header-bg-variant="primary" header-text-variant="white"
+      header-border-variant="dark" footer-border-variant="dark"><template v-slot:modal-title>
+        <h2>Update Product </h2>
+      </template><template v-slot:modal-footer>
+        <b-button variant="outline-danger" @click="clean">
+          <h5>Cancel</h5>
+        </b-button>
+        <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="Update">
+          <h5 style="font-weight:700;">Update</h5>
+        </b-button>
+      </template>
+      <div class="modal-body">
+        <div class="input-group" id="input2" style="width: 40%; float:right; border:1px solid black; border-radius:5%;">
+          <div class="custom-file">
+            <b-form-input v-model="update.ID" placeholder="type id product"></b-form-input>
+          </div>
+          <div class="input-group-append"><button class="btn btn-outline-primary" type="button">Search</button></div>
+        </div>
+        <h5 style="margin-top: 40px;">Name</h5>
+        <b-form-input v-model="update.NAME_PRODUCT" id="input2" placeholder="name product"></b-form-input>
+        <h5 style="margin-top:18px;">Price</h5>
+        <div class="input-group mb-3" id="input3">
+          <div class="input-group-prepend"><span class="input-group-text">Rp.</span></div>
+          <b-form-input v-model="update.PRICE" placeholder="entry price product"></b-form-input>
+        </div>
+        <h5 style="margin-top:18px;">Image</h5>
+        <div class="input-group" id="input2">
+          <div class="custom-file"><input v-model="update.IMG" type="text" class="form-control"
+              placeholder="link url-image"></div>
+          <div class="input-group-append"><button class="btn btn-outline-primary" type="button">OK ! </button>
+          </div>
+        </div>
+        <h5 style="margin-top:18px;">Category</h5>
+        <div id="input4">
+          <b-form-select v-model="update.CATEGORY" :options="options" v-if="selected == null">
+            <h2> </h2>
+          </b-form-select>
+        </div>
+      </div>
+    </b-modal>
+    <!-- MODAL DELETE PRODUCT -->
+    <b-modal id="bv-modal-DeleteData" hide-footer header-bg-variant="primary" header-text-variant="white"
+      header-border-variant="dark"><template v-slot:modal-title>
+        <h4>Delete Product</h4>
+      </template>
+      <div class="d-block text-center">
+        <b-input-group prepend="ID" class="mt-3">
+          <b-form-input v-model="deleteID"></b-form-input>
+        </b-input-group>
+      </div>
+      <b-button variant="outline-danger" class="mt-3" block @click="Delete"
+        style="width:15em;display:block; margin:20px auto;">
+        <h4>Delete </h4>
+      </b-button>
+    </b-modal>
+    <!-- MODAL CHECKOUT USER -->
+    <div>
+
+      <b-modal id="bv-modal-CheckOut" hide-footer>
+        <template v-slot:modal-title>
+         <h2><code>Checkout</code></h2> 
+         <p> Cashier : </p>
+        </template>
+        <div class="d-block text-center">
+          <h3>Hello From This Modal!</h3>
+        </div>
+        <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Close Me</b-button>
+      </b-modal>
+    </div>
   </div>
 </template>
 <script>
@@ -293,6 +300,7 @@
           CATEGORY: ''
         },
         deleteID: '',
+        errorhandling: 'Data not found!'
       }
     },
     mounted() {
@@ -301,56 +309,52 @@
     methods: {
       load() {
         axios.get(process.env.VUE_APP_URL).then(res => {
-            this.product = res.data
-          }
-        ).catch((err) => {
-            alert('Data Error!' + err)
-          }
-        )
+          this.product = res.data
+        }).catch((err) => {
+          alert('Data Error!' + err)
+        })
       },
       save() {
         axios.post(process.env.VUE_APP_URL,
-        this.form).then((res) => {
-            alert('Product Sucessfully Saved!', res)
-            this.load()
-            this.form = []
-            this.clean()
-          }
-        ).catch(err => {
-            alert('Data Error!' + err)
-          }
-        )
-      },
-      Update(){
-        axios.put(process.env.VUE_APP_URL, {
-          ID: this.update.ID,
-          NAME_PRODUCT: this.update.NAME_PRODUCT,
-          PRICE: this.update.PRICE,
-          IMG : this.update.IMG,
-          CATEGORY: this.update.CATEGORY
-        })
-        .then((res) => {
-        alert('Product was Updated!', res)
-        this.load()
-        this.form = []
-        this.clean()
-      })
-      .catch(err => {
-        alert('update error!', err)
-      })
-    },
-     Delete(){
-      axios.delete(`${process.env.VUE_APP_URL}/delete/${this.deleteID}`)
-        .then(res => {
-          alert("Success delete product", res)
+          this.form).then((res) => {
+          alert('Product Sucessfully Saved!', res)
           this.load()
           this.form = []
           this.clean()
+        }).catch(err => {
+          alert('Data Error!' + err)
         })
-        .catch(err => {
-          alert ('delete product errorr!', err)
-        })
-    },
+      },
+      Update() {
+        axios.put(process.env.VUE_APP_URL, {
+            ID: this.update.ID,
+            NAME_PRODUCT: this.update.NAME_PRODUCT,
+            PRICE: this.update.PRICE,
+            IMG: this.update.IMG,
+            CATEGORY: this.update.CATEGORY
+          })
+          .then((res) => {
+            alert('Product was Updated!', res)
+            this.load()
+            this.form = []
+            this.clean()
+          })
+          .catch(err => {
+            alert('update error!', err)
+          })
+      },
+      Delete() {
+        axios.delete(`${process.env.VUE_APP_URL}/delete/${this.deleteID}`)
+          .then(res => {
+            alert("Success delete product", res)
+            this.load()
+            this.form = []
+            this.clean()
+          })
+          .catch(err => {
+            alert('delete product errorr!', err)
+          })
+      },
       clean() {
         this.$bvModal.hide('bv-modal-AddData')
         this.$bvModal.hide('bv-modal-UpdateData')
@@ -361,181 +365,224 @@
       addCart(data) {
         this.listCHart.push(data)
       },
-    //       searching(){
-    //     console.log(this.search)
-    //     axios.get(`http://localhost:2153/product/search?name=${this.search}`)
-    //     .then(res => {
-    //     this.product = res.data
-    //   }).catch ((err) => {
-    //     console.log(err)
-    //   })
-    // },
+       searching(){
+          axios.get(`http://localhost:2153/product/search?name=${this.search}`)
+          .then(res => {
+            this.product = res.data
+        }).catch ( err => {
+           alert(this.errorhandling + ',  with key: ' + this.search )
+          this.product = [], err
+          
+        })
+      },
 
     }
-}
+  }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
-    .icon-menus span, .icon-menus a {
-      color: white;
-      background-color:  #007BFe;
-    }
-    .icon-history span, .icon-history a {
-      color: black;
-      background-color: unset;
-    }
-    .sidebar a {
-      text-decoration: none;
-      color: black;
-    }
-    .header {
-      background-color: white;
-      width: 73%;
-      height: 4.5em;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-      position: fixed;
-      z-index: 1;
-      border-radius: 8px;
-      border-bottom: #007BFF solid;
-      box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
-    }
+<style scoped>
+  .icon-menus span,
+  .icon-menus a {
+    color: white;
+    background-color: #007BFe;
+  }
 
-    .icon-menu {
-      padding-left: 40px;
-      cursor: pointer;
-    }
+  .icon-history span,
+  .icon-history a {
+    color: black;
+    background-color: unset;
+  }
 
-    .icon-search {
-      padding-right: 30px;
-      cursor: pointer;
-    }
+  .sidebar a {
+    text-decoration: none;
+    color: black;
+  }
 
-    .header-cart {
-      width: 27.6%;
-      height: 4.5em;
-      margin-left: 58.6em;
-      background-color: white;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-      z-index: 1;
-      text-align: center;
-      border-radius: 8px;
-      border-bottom: #007BFF solid;
-      box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
-      position: fixed;
-    }
+  .header {
+    background-color: white;
+    width: 73%;
+    height: 4.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    z-index: 1;
+    border-radius: 8px;
+    border-bottom: #007BFF solid;
+    box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
+  }
 
-    .title-cart h2 {
-      padding-top: 12px;
-    }
+  .icon-menu {
+    padding-left: 40px;
+    cursor: pointer;
+  }
 
-    .header-cart span {
-      background-color: #57CAD5;
-      color: white;
-      border-radius: 20%;
-    }
+  .icon-search {
+    padding-right: 30px;
+    cursor: pointer;
+    border: 1px white solid;
+  }
 
-    .sidebar {
-      width: 4em;
-      background-color: white;
-      padding-top: 7em;
-      margin-left: 1.5em;
-      padding-bottom: 12em;
-      border-radius: 8px;
-      /* border: 1px gray solid; */
-      border-bottom: #007BFF solid;
-      box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
-      position: fixed;
-      cursor: pointer;
-    }
+  .header-cart {
+    width: 27.6%;
+    height: 4.5em;
+    margin-left: 58.6em;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    text-align: center;
+    border-radius: 8px;
+    border-bottom: #007BFF solid;
+    box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
+    position: fixed;
+  }
 
-    .sidebar-action {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      font-weight: 500;
-      font-size: 16px;
-    }
+  .title-cart h2 {
+    padding-top: 12px;
+  }
 
-    .sidebar-action img:hover {
-      transform: scale(1.1);
-    }
+  .header-cart span {
+    background-color: #57CAD5;
+    color: white;
+    border-radius: 20%;
+  }
 
-    .sidebar-action img {
-      padding: 1.4em;
-    }
-    .wrapper-allcart {
+  .sidebar {
+    width: 4em;
+    background-color: white;
+    padding-top: 7em;
+    margin-left: 1.5em;
+    padding-bottom: 12em;
+    border-radius: 8px;
+    /* border: 1px gray solid; */
+    border-bottom: #007BFF solid;
+    box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
+    position: fixed;
+    cursor: pointer;
+  }
+
+  .sidebar-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .sidebar-action img:hover {
+    transform: scale(1.1);
+  }
+
+  .sidebar-action img {
+    padding: 1.4em;
+  }
+
+  .wrapper-allcart {
+    width: 100%;
+    height: 100%;
+    margin: 4.8em auto auto 58.8em;
+    position: fixed;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: -10px 10px rgba(144, 144, 144, 0.212);
+  }
+
+  #cart {
+    width: 21.7em;
+    height: 58%;
+    margin-bottom: 30px;
+  }
+
+  .cart-customer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* MODEL STYLING */
+  #bv-modal-AddData h5 {
+    font-family: sans-serif;
+  }
+
+  #bv-modal-AddData .modal-body #input1,
+  #input2,
+  #input3,
+  #input4 {
+    box-sizing: border-box;
+    box-shadow: 0px 4px 6px rgba(228, 214, 214, 10);
+  }
+
+  /* cart style */
+  #row {
+    width: 80%;
+    margin-left: 5em;
+    padding-top: 4.5em;
+  }
+
+  /* atur cart */
+  .wrapper-cart .cart2 {
+    padding-top: 20px;
+  }
+
+  .wrapper-cart .cart2-2 {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .wrapper-cart {
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .wrapper-cart img {
+    width: 5em;
+    height: 5em;
+    margin-top: 20px;
+    margin-right: 12px;
+  }
+
+  .total-price {
+    display: flex;
+    flex-direction: row;
+    margin-left: 30px;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .checkout {
+    display: flex;
+    flex-direction: column;
+    width: 18em;
+    margin-top: 1em;
+    margin-left: 30px;
+  }
+  form input[type=text] {
+     width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('https://cms-assets.tutsplus.com/uploads/users/523/posts/27345/preview_image/search-icon-large.png');
+    background-repeat: no-repeat;
+    background-size: 4em;
+    background-position: right;
+    padding: 12px 20px 12px 10px;
+    -webkit-transition: width 0.2s ease-in-out;
+    transition: width 0.6s ease-in-out;
+    float: right;
+   }
+      form input[type=text]:focus {
       width: 100%;
-      height: 100%;
-      margin: 4.8em auto auto 58.8em;
-      position: fixed;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: -10px 10px rgba(144, 144, 144, 0.212);
-    }
-    #cart {
-      width: 21.7em;
-      height: 60%;
-    }
-    .cart-customer {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    /* MODEL STYLING */
-    #bv-modal-AddData h5 {
-      font-family: sans-serif;
-    }
-
-    #bv-modal-AddData .modal-body #input1, #input2, #input3, #input4 {
-      box-sizing: border-box;
-      box-shadow: 0px 4px 6px rgba(228, 214, 214, 10);
-    }
-    /* cart style */
-    #row {
-      width: 80%;
-      margin-left: 5em;
-      padding-top: 4.5em;
-    }
-    /* atur cart */
-    .wrapper-cart .cart2 {
-      padding-top: 20px;
-    }
-    .wrapper-cart .cart2-2 {
-      display: flex;
-      flex-direction: row;
-      justify-items: center;
-      align-items: center; 
-    }
-    .wrapper-cart {
-      display: flex;
-      flex-direction: row;
-      width: 20%;
-      justify-content: center;
-      align-items: flex-start;
-    }
-    .wrapper-cart img {
-      width: 6em;
-      margin-top: 20px ;
-      margin-right: 12px;
-    }
-    .total-price {
-      display: flex;
-      flex-direction: row;
-      margin-left: 30px;
-      text-align: center;
-    }
-    .checkout {
-      display: flex;
-      flex-direction: column;
-      width: 18em;
-      margin-top: 1em;
-      margin-left: 30px;
-    }
-  </style>
+   }
+</style>
