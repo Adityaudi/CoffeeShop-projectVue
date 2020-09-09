@@ -372,10 +372,8 @@
         }).catch ( err => {
            alert(this.errorhandling + ',  with key: ' + this.search )
           this.product = [], err
-          
         })
       },
-
     }
   }
 </script>
