@@ -12,9 +12,13 @@
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
+    "chart.js": "^2.9.3",
+    "color-generator": "^0.1.0",
     "core-js": "^3.6.5",
+    "dotenv": "^8.2.0",
     "portal-vue": "^2.1.7",
     "vue": "^2.6.12",
+    "vue-chartjs": "^3.5.1",
     "vue-router": "^3.4.3"
   },
   "devDependencies": {

@@ -89,15 +89,22 @@
                     <img src="@/assets/Ellipse 1.svg" alt="" id="img3">
                 </div>
         </div>
+        <div class="chart">
+          <img src="@/assets/Chart.png">
+        </div>
+        <div class="recent-order">
+            
+        </div>
     </div>
 </div>
 </template>
 
 <script>
     export default {
-        name:'history',
+        name : 'history',
+        
     }
-
+    
 </script>
 
 <style>
@@ -174,113 +181,120 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin: 120px 0 0px 130px;
+    margin: 130px 0 0px 130px;
     position: fixed;
-}
-.shape .shape1:hover {
-    transform: scale(1.03);
-    cursor: pointer;
-}
-.shape .shape2:hover {
-    transform: scale(1.03);
-    cursor: pointer;
-}
-.shape .shape3:hover {
-    transform: scale(1.03);
-    cursor: pointer;
-}
-.shape .shape1{
-    display: flex;
-    background-repeat: no-repeat;
-    filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
-    border-radius: 10px;
-    width: 30%;
-    height: 70%;
-    border: linear-gradient(278.29deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%) solid;
-}
-.shape .shape2{
-    background-repeat: no-repeat;
-    filter: drop-shadow(10px 15px 10px rgba(41, 223, 255, 0.25));
-    border-radius: 10px;
-    width: 30%;
-    height: 70%;
-    border: linear-gradient(278.29deg, #29DFFF 30.05%, rgba(41, 223, 255, 0) 133.19%) solid;
-}
-.shape .shape3{
-    /* background: url(@/assets/Rectangle\ 9-2.svg); */
-    background-repeat: no-repeat;
-    filter: drop-shadow(10px 15px 10px rgba(241, 201, 236, 0.75));
-    border-radius: 10px;
-    width: 30%;
-    height: 70%;
-    border: linear-gradient(278.29deg, #AB84C8 30.05%, rgba(241, 201, 236, 0) 133.19%) solid;
-}
-.shape img {
-    width: 50%;
-    height: 45%;
-    padding-top: -100px;
-} 
-.shape .shape1 #img1 {
-    position: absolute;
-    margin: 60px 0px 0px 110px;
-}
-.shape .shape1 #img2 {
-    position: absolute;
-    margin: 10px 0px 0px 160px;
-}
-.shape .shape1 #img3 {
-    position: absolute;
-    margin: -20px 0px 10px 200px;
-}
-.shape .shape2 #img1 {
-    position: absolute;
-    margin: 60px 0px 0px 110px;
-}
-.shape .shape2 #img2 {
-    position: absolute;
-    margin: 20px 0px 0px 165px;
-}
-.shape .shape2 #img3 {
-    position: absolute;
-    margin: -20px 0px 10px 200px;
-}
-.shape .shape3 #img1 {
-    position: absolute;
-    margin: 60px 0px 0px 110px;
-}
-.shape .shape3 #img2 {
-    position: absolute;
-    margin: 20px 0px 0px 165px;
-}
-.shape .shape3 #img3 {
-    position: absolute;
-    margin: -20px 0px 10px 200px;
-}
-.shape p {
-    position: absolute;
-    font-family: 'Airbnb Cereal App', sans-serif;
-    font-size: 16px;
-    margin: 45px 0 0 20px;
-}
-.shape h5 {
-    position: absolute;
-    font-family: 'Airbnb Cereal App', sans-serif;
-    font-size: 28px;
-    margin: 70px 0 0px 20px;
-    z-index: 1;
-    font-weight: 600;
-}
-.shape h4  {
-    position: absolute;
-    font-family: 'Airbnb Cereal App', sans-serif;
-    font-size: 18px;
-    margin: 110px 0 0px 20px;
-    font-weight: 500;
-}
-.shape #background {
-      position: absolute;
-    z-index: -1;
-    width: 105%;
-    height: 100%;
-}
+    z-index: -100;
+    } 
+    .shape .shape1:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+    .shape .shape2:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+    .shape .shape3:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+    .shape .shape1{
+        filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
+        border-radius: 10px;
+        width: 30%;
+        height: 70%;
+        border: linear-gradient(278.29deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%) solid;
+    }
+    .shape .shape2{
+        filter: drop-shadow(10px 15px 10px rgba(41, 223, 255, 0.25));
+        border-radius: 10px;
+        width: 30%;
+        height: 70%;
+        border: linear-gradient(278.29deg, #29DFFF 30.05%, rgba(41, 223, 255, 0) 133.19%) solid;
+    }
+    .shape .shape3{
+        filter: drop-shadow(10px 15px 10px rgba(241, 201, 236, 0.75));
+        border-radius: 10px;
+        width: 30%;
+        height: 70%;
+        border: linear-gradient(278.29deg, #AB84C8 30.05%, rgba(241, 201, 236, 0) 133.19%) solid;
+    }
+    .shape img {
+        width: 50%;
+        height: 45%;
+        padding-top: -100px;
+    } 
+    .shape .shape1 #img1 {
+        position: absolute;
+        margin: 60px 0px 0px 110px;
+    }
+    .shape .shape1 #img2 {
+        position: absolute;
+        margin: 10px 0px 0px 160px;
+    }
+    .shape .shape1 #img3 {
+        position: absolute;
+        margin: -20px 0px 10px 200px;
+    }
+    .shape .shape2 #img1 {
+        position: absolute;
+        margin: 60px 0px 0px 110px;
+    }
+    .shape .shape2 #img2 {
+        position: absolute;
+        margin: 20px 0px 0px 165px;
+    }
+    .shape .shape2 #img3 {
+        position: absolute;
+        margin: -20px 0px 10px 200px;
+    }
+    .shape .shape3 #img1 {
+        position: absolute;
+        margin: 60px 0px 0px 110px;
+    }
+    .shape .shape3 #img2 {
+        position: absolute;
+        margin: 20px 0px 0px 165px;
+    }
+    .shape .shape3 #img3 {
+        position: absolute;
+        margin: -20px 0px 10px 200px;
+    }
+    .shape p {
+        position: absolute;
+        font-family: 'Airbnb Cereal App', sans-serif;
+        font-size: 16px;
+        margin: 45px 0 0 20px;
+    }
+    .shape h5 {
+        position: absolute;
+        font-family: 'Airbnb Cereal App', sans-serif;
+        font-size: 28px;
+        margin: 70px 0 0px 20px;
+        z-index: 1;
+        font-weight: 600;
+    }
+    .shape h4  {
+        position: absolute;
+        font-family: 'Airbnb Cereal App', sans-serif;
+        font-size: 18px;
+        margin: 110px 0 0px 20px;
+        font-weight: 500;
+    }
+    .shape #background {
+          position: absolute;
+        z-index: -1;
+        width: 105%;
+        height: 100%;
+    }
+    .chart img {
+      width: 91.6%;
+      float: right;
+      margin: 50% auto 4em;
+      z-index: 99;
+      border-top: #007BFF dotted 10px;
+      box-shadow: 0px 10px rgba(144, 144, 144, 400) 100%; 
+    } 
+    .chart img:focus {
+      border: solid 10px black;
+    }
 </style>

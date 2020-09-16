@@ -19,7 +19,19 @@
         </div>
         <div class="icon-search">
           <form>
+              <div>
                <input v-model="search"  type="text" name="search" placeholder="Search.." @input="searching()" >
+              </div>
+               <div>
+                     <b-dropdown size='sm' offset="-100" style="margin-left:5px; height:50px;" variant='outline-primary'>
+                            <select name="category_id" @click="sortby()" class="form-control">
+                              <option selected disabled>sort by:</option>
+                              <option value="ID">Id</option>
+                              <option value="NAME_PRODUCT">Name</option>
+                              <option value="PRICE">Price</option>
+                            </select>
+                    </b-dropdown>  
+                </div>
         </form>
         </div>
       </div>
@@ -27,9 +39,7 @@
     <div class="wrapper" id="header-cart">
       <div class="header-cart">
         <div class="title-cart">
-          <h2>Cart <span> {{ listCHart.length }}
-
-            </span></h2>
+          <h2>Cart <span> {{ listCHart.length }} </span></h2>
         </div>
       </div>
     </div>
@@ -77,7 +87,7 @@
       </div>
       <div class="total-price" v-else>
         <h5>Total</h5>
-        <h4 style="margin-left:7em;">30000</h4>
+        <h4 style="margin-left:7em;">95000</h4>
       </div>
       <div class="checkout" v-if="listCHart.length == 0" hidden>
       </div>
@@ -94,7 +104,7 @@
           <div class="icon-menus"> <a href="http://localhost:8081/"><img src="@/assets/fork.png"><span>Menus</span></a>
           </div>
                 <!-- HISTORY -->
-          <div class="icon-history"> <a href="http://localhost:8081/#/history"><img
+          <div class="icon-history"> <a href= 'http://localhost:8081/#/history'><img
                 src="@/assets/clipboard.png"><span>History</span></a></div>
 
                 <!-- MODAL C. R. U. D -->
@@ -155,7 +165,7 @@
         </div>
         <h5 style="margin-top:18px;">Category</h5>
         <div id="input4">
-          <b-form-select v-model="form.CATEGORY" :options="options" v-if="selected == null">
+          <b-form-select v-model="form.CATEGORY" :options="options">
 
           </b-form-select>
         </div>
@@ -219,16 +229,35 @@
     </b-modal>
     <!-- MODAL CHECKOUT USER -->
     <div>
-
-      <b-modal id="bv-modal-CheckOut" hide-footer>
+      <b-modal id="bv-modal-CheckOut" hide-footer header-bg-variant= "primary">
         <template v-slot:modal-title>
-         <h2><code>Checkout</code></h2> 
-         <p> Cashier : </p>
+         <h2 style="color:white;">Checkout</h2>
+  
+         <div class="cashier" style="display:flex; flex-direction:row; color:white;"> 
+             <p style="margin-right:10px; margin-bottom:-10px;"> Cashier : <span>adityaUdi</span></p>
+         </div>
         </template>
-        <div class="d-block text-center">
-          <h3>Hello From This Modal!</h3>
+          <div class="checkout-list overflow-auto" block style="height:15em; margin-bottom:30px;">
+            <div class="list" v-for="items in listCHart" :key="items">
+                <div class="menu1" style="margin-top:15px;">
+                  <h5>{{items.NAME_PRODUCT}}</h5>
+                </div>
+                <div class="menu2" style="margin-top:15px;">
+                    <h5>Rp. {{items.PRICE}}</h5>
+                </div>
+            </div>
+          </div>
+          <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-end;">
+              <h5 >total:</h5>
+              <h5 style="padding-right: 20px; padding-left: 50px;">Rp. 95000</h5>
+          </div>
+           <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-start;">
+              <h5>payment: <code>Cash</code></h5>
+          </div>
+        <div style="margin-top:-2em;">
+        <b-button variant=outline-danger class="mt-5" block @click="$bvModal.hide('bv-modal-example')"><h5> Print</h5></b-button>
+        <b-button variant=primary class="mt-2" block @click="$bvModal.hide('bv-modal-example')"> <h5>Send Email </h5></b-button>
         </div>
-        <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Close Me</b-button>
       </b-modal>
     </div>
   </div>
@@ -236,6 +265,7 @@
 <script>
   import Product from '../../components/product'
   import axios from 'axios'
+  
 
   export default {
     name: 'product',
@@ -244,7 +274,6 @@
     },
     data() {
       return {
-
         product: [],
         listCHart: [],
         search: '',
@@ -271,20 +300,6 @@
             text: 'Coffee'
           },
         ],
-        radio: '',
-        optionRadio: [{
-            text: 'ID Name'
-          },
-          {
-            text: 'Name Menu'
-          },
-          {
-            text: 'Category'
-          },
-          {
-            text: 'Price'
-          }
-        ],
         form: {
           NAME_PRODUCT: '',
           PRICE: '',
@@ -300,7 +315,6 @@
           CATEGORY: ''
         },
         deleteID: '',
-        errorhandling: 'Data not found!'
       }
     },
     mounted() {
@@ -308,12 +322,22 @@
     },
     methods: {
       load() {
-        axios.get(process.env.VUE_APP_URL).then(res => {
+        axios.get(process.env.VUE_APP_URL)
+        .then((res) => {
           this.product = res.data
         }).catch((err) => {
-          alert('Data Error!' + err)
+          console.log(process.env.VUE_APP_URL)
+          alert('Product not found!, pls contact admin!', err)
         })
       },
+      sortby() {
+          axios.get(`${process.env.VUE_APP_URL}/filterby?sort=${event.target.value}`)
+          .then((result) => {
+            this.product = result.data
+          }).catch((err) => {
+            alert('erorr', err)
+          });
+        },
       save() {
         axios.post(process.env.VUE_APP_URL,
           this.form).then((res) => {
@@ -366,11 +390,10 @@
         this.listCHart.push(data)
       },
        searching(){
-          axios.get(`http://localhost:2153/product/search?name=${this.search}`)
+          axios.get(`${process.env.VUE_APP_URL}/search?name=${this.search}`)
           .then(res => {
             this.product = res.data
         }).catch ( err => {
-           alert(this.errorhandling + ',  with key: ' + this.search )
           this.product = [], err
         })
       },
@@ -564,6 +587,12 @@
     margin-top: 1em;
     margin-left: 30px;
   }
+  form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+  }
   form input[type=text] {
      width: 130px;
     box-sizing: border-box;
@@ -582,5 +611,15 @@
    }
       form input[type=text]:focus {
       width: 100%;
+   }
+   .checkout-list {
+     display: flex;
+     flex-direction: column;
+     
+   }
+   .list {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
    }
 </style>

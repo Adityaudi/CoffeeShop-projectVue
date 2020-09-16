@@ -16,7 +16,6 @@ const mainRouter = new VueRouter({
             path: "/history",
             name: "history",
             component: history,
-            props:true
         },
     ],
 })
