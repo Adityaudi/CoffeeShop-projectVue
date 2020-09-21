@@ -1,5 +1,5 @@
 <template>
-    <div class="history">
+  <div class="history">
     <div class="wrapper">
       <div class="header">
         <div class="icon-menu"><svg width="36" height="35" viewBox="0 0 36 35" fill="none"
@@ -18,164 +18,234 @@
         </div>
         <div class="icon-search">
           <div><img src="@/assets/magnifying-glass.png" id="show-btn" @click="$bvModal.show('bv-modal-example')">
-            <b-modal id="bv-modal-example" hide-footer><template v-slot:modal-title style="border: 10px solid black;">
-                <h2>Product <code>Search</code></h2>
-              </template>
-              <div class=" text-center">
-                <b-form-group>
-                  <b-input v-model="search" placeholder="Search Product" style="margin-bottom:1em;margin-top:1em;">
-                  </b-input>
-                  <b-form-radio-group v-model="radio" :options="optionRadio" name="radio-inline"
-                    style="margin-bottom:2em;"></b-form-radio-group>
-                </b-form-group>
-              </div>
-              <b-button class="mt-3" variant="primary" block @click="$bvModal.hide('bv-modal-example')">Search
-              </b-button>
-            </b-modal>
           </div>
         </div>
       </div>
       <!-- sidebar -->
-        <div class="wrapper" id="sidebar">
-          <div class="sidebar">
-            <div class="sidebar-action">
-              <div class="icon-menus"> <a href="http://localhost:8080/"><img src="@/assets/fork.png"><span>Menus</span></a></div>
-              <div class="icon-history"> <a href="http://localhost:8080/#/history"><img src="@/assets/clipboard.png"><span>History</span></a></div>
-              <div><img src="@/assets/add.png" @click="$bvModal.show('CRUD')">
-                <b-modal id="CRUD" hide-footer header-border-variant="primary"><template v-slot:modal-title>
-                    <h3>CoffeeShop <code>CRUD</code></h3>
-                  </template>
-                  <div class="d-block text-center">
-                    <h2>CRUD not found! </h2><br>
-                    <p style="float:left;">Change page:</p>
-                  </div>
-                  <b-button variant="outline-primary" block class="mt-3">
-                   <a href="http://localhost:8080/" style="text-decoration:none;" > <h5 id="home">HOME</h5> </a>
-                  </b-button>
-                   <b-button variant="danger" block class="mt-3" @click="$bvModal.hide('CRUD')">
-                   <h5>Close</h5>
-                  </b-button>
-                </b-modal>
-              </div>
+      <div class="wrapper" id="sidebar">
+        <div class="sidebar">
+          <div class="sidebar-action">
+            <div class="icon-menus">
+              <router-link v-bind:to="'/'">
+                <img src="@/assets/fork.png"><span style="color:black;">Menus</span>
+              </router-link>
+            </div>
+            <!-- HISTORY -->
+            <div class="icon-history">
+              <router-link v-bind:to="'/history'">
+                <img src="@/assets/clipboard.png">
+                <span>History</span>
+              </router-link>
+            </div>
+            <div><img src="@/assets/add.png" @click="$bvModal.show('CRUD')">
+              <b-modal id="CRUD" hide-footer header-border-variant="primary"><template v-slot:modal-title>
+                  <h3>CoffeeShop <code>CRUD</code></h3>
+                </template>
+                <div class="d-block text-center">
+                  <h2>CRUD not found! </h2><br>
+                  <p style="float:left;">Change page:</p>
+                </div>
+                <b-button variant="outline-primary" block class="mt-3">
+                  <router-link v-bind:to="'/'"> 
+                        <h5 id="home">HOME</h5>
+                  </router-link>  
+                </b-button>
+                <b-button variant="danger" block class="mt-3" @click="$bvModal.hide('CRUD')">
+                  <h5>Close</h5>
+                </b-button>
+              </b-modal>
             </div>
           </div>
         </div>
-        <div class="shape">
-                <div class="shape1">
-                    <p>Today`s Income</p>
-                    <h5>Rp. 1.000.000</h5>
-                    <h4>+2% Yesterday</h4>
-                    <img src="@/assets/Rectangle 9.png" id="background">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img1">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img2">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img3">
-                </div>
-                <div class="shape2">
-                    <p>Orders</p>
-                    <h5>3.270</h5>
-                    <h4>+5% Last Week</h4>
-                    <img src="@/assets/Rectangle 9-1.svg" id="background">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img1">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img2">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img3">
-                </div>    
-                <div class="shape3">
-                    <p>This Year`s Income</p>
-                    <h5>Rp. 1.000.000.000.000</h5>
-                    <h4>+10% Last Year</h4>
-                    <img src="@/assets/Rectangle 9-2.svg" id="background">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img1">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img2">
-                    <img src="@/assets/Ellipse 1.svg" alt="" id="img3">
-                </div>
+      </div>
+      <div class="shape">
+        <div class="shape1">
+          <p>Today`s Income</p>
+          <h5>Rp. 1.000.000</h5>
+          <h4>+2% Yesterday</h4>
+          <img src="@/assets/Rectangle 9.png" id="background">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img1">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img2">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img3">
         </div>
-        <div class="chart">
-          <img src="@/assets/Chart.png">
+        <div class="shape2">
+          <p>Orders</p>
+          <h5>3.270</h5>
+          <h4>+5% Last Week</h4>
+          <img src="@/assets/Rectangle 9-1.svg" id="background">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img1">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img2">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img3">
         </div>
-        <div class="recent-order">
-            
+        <div class="shape3">
+          <p>This Year`s Income</p>
+          <h5>Rp. 1.000.000.000.000</h5>
+          <h4>+10% Last Year</h4>
+          <img src="@/assets/Rectangle 9-2.svg" id="background">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img1">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img2">
+          <img src="@/assets/Ellipse 1.svg" alt="" id="img3">
         </div>
+      </div>
+      <div class="chart">
+        <img src="@/assets/Chart.png">
+      </div>
+      <div class="recent-order text-style" style="margin-bottom:1em;">
+        <div class="container" style="padding-left: 6em;">
+          <div class="row" style="background-color:#007BFe; color:white; border:1px solid black;">
+            <div class="col-10">
+              <h4>Recent Order</h4>
+            </div>
+            <div class="col-2">
+              <div class="option-recent">
+                <b-form-select v-model="selected" class="mb-1" style="background-color:#fff">
+                  <b-form-select-option>Today</b-form-select-option>
+                  <b-form-select-option>Month</b-form-select-option>
+                  <b-form-select-option>Years</b-form-select-option>
+                </b-form-select>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3"></div>
+          <div class="row font-recent-order" style="border-bottom:2px solid grey;">
+            <div class="col">
+              <h5>INVOICE</h5>
+            </div>
+            <div class="col">
+              <h5>CASHIER</h5>
+            </div>
+            <div class="col">
+              <h5>DATE</h5>
+            </div>
+            <div class="col">
+              <h5>ORDERS</h5>
+            </div>
+            <div class="col">
+              <h5>AMOUNT</h5>
+            </div>
+          </div>
+          <div class="wrap">
+          <div class="row data-history" v-for="items in history" :key="items.ID">
+            <div class="col">
+              <h5>#{{ items.invoices }}</h5>
+            </div>
+            <div class="col">
+              <h5>{{ items.Cashier }}</h5>
+            </div>
+            <div class="col">
+              <h5>{{ items.date }}</h5>
+            </div>
+            <div class="col">
+              <h5>{{items.orders}}</h5>
+            </div>
+            <div class="col">
+              <h5>{{items.amount}}</h5>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name : 'history',
-        
-    }
-    
+  import axios from "axios";
+export default {
+  name: "History",
+  data: function () {
+    return {
+      history: [],
+    };
+  },
+  methods: {
+    getHistory: function () {
+      axios
+        .get("http://localhost:2150/history")
+        .then((res) => {
+          this.history = res.data;
+        })
+        .catch((err) => alert(err.message));
+    },
+  },
+  mounted() {
+    this.getHistory();
+  },
+};
 </script>
 
 <style>
-     .icon-history span, .icon-history a {
-      color: white;
-      background-color:  #007BFe;
-    }
-    .sidebar a {
-      text-decoration: none;
-      color: black;
-    }
-    .header {
-      background-color: white;
-      width: 100%;
-      height: 4.5em;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-      position: fixed;
-      z-index: 1;
-      border-radius: 8px;
-      border-bottom: #007BFF solid;
-      box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
-    }
+  .icon-history span,
+  .icon-history a {
+    color: white;
+    background-color: #007BFe;
 
-    .icon-menu {
-      padding-left: 40px;
-      cursor: pointer;
-    }
+  }
+  .container {  
+    z-index: -10000;
+  }
+  .header {
+    background-color: white;
+    width: 100%;
+    height: 4.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    z-index: 1;
+    border-radius: 8px;
+    border-bottom: #007BFF solid;
+    box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
+  }
 
-    .icon-search {
-      padding-right: 30px;
-      cursor: pointer;
-    }
+  .icon-menu {
+    padding-left: 40px;
+    cursor: pointer;
+  }
 
-    .sidebar {
-      width: 4em;
-      background-color: white;
-      padding-top: 7em;
-      margin-left: 1.5em;
-      padding-bottom: 12em;
-      border-radius: 8px;
-      /* border: 1px gray solid; */
-      border-bottom: #007BFF solid;
-      box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
-      position: fixed;
-      cursor: pointer;
-    }
+  .icon-search {
+    padding-right: 30px;
+    cursor: pointer;
+  }
 
-    .sidebar-action {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      font-weight: 500;
-      font-size: 16px;
-    }
+  .sidebar {
+    width: 4em;
+    background-color: white;
+    padding-top: 7em;
+    margin-left: 1.5em;
+    padding-bottom: 12em;
+    border-radius: 8px;
+    /* border: 1px gray solid; */
+    border-bottom: #007BFF solid;
+    box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
+    position: fixed;
+    cursor: pointer;
+  }
 
-    .sidebar-action img:hover {
-      transform: scale(1.1);
-    }
+  .sidebar-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+  }
 
-    .sidebar-action img {
-      padding: 1.4em;
-    }
-    #home {
-        background-color: white;
-    }
-    .shape{
+  .sidebar-action img:hover {
+    transform: scale(1.1);
+  }
+
+  .sidebar-action img {
+    padding: 1.4em;
+  }
+
+  #home {
+    background-color: white;
+  }
+
+  .shape {
     width: 85%;
     height: 45%;
     display: flex;
@@ -184,117 +254,159 @@
     margin: 130px 0 0px 130px;
     position: fixed;
     z-index: -100;
-    } 
-    .shape .shape1:hover {
-        transform: scale(1.1);
-        cursor: pointer;
-    }
-    .shape .shape2:hover {
-        transform: scale(1.1);
-        cursor: pointer;
-    }
-    .shape .shape3:hover {
-        transform: scale(1.1);
-        cursor: pointer;
-    }
-    .shape .shape1{
-        filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
-        border-radius: 10px;
-        width: 30%;
-        height: 70%;
-        border: linear-gradient(278.29deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%) solid;
-    }
-    .shape .shape2{
-        filter: drop-shadow(10px 15px 10px rgba(41, 223, 255, 0.25));
-        border-radius: 10px;
-        width: 30%;
-        height: 70%;
-        border: linear-gradient(278.29deg, #29DFFF 30.05%, rgba(41, 223, 255, 0) 133.19%) solid;
-    }
-    .shape .shape3{
-        filter: drop-shadow(10px 15px 10px rgba(241, 201, 236, 0.75));
-        border-radius: 10px;
-        width: 30%;
-        height: 70%;
-        border: linear-gradient(278.29deg, #AB84C8 30.05%, rgba(241, 201, 236, 0) 133.19%) solid;
-    }
-    .shape img {
-        width: 50%;
-        height: 45%;
-        padding-top: -100px;
-    } 
-    .shape .shape1 #img1 {
-        position: absolute;
-        margin: 60px 0px 0px 110px;
-    }
-    .shape .shape1 #img2 {
-        position: absolute;
-        margin: 10px 0px 0px 160px;
-    }
-    .shape .shape1 #img3 {
-        position: absolute;
-        margin: -20px 0px 10px 200px;
-    }
-    .shape .shape2 #img1 {
-        position: absolute;
-        margin: 60px 0px 0px 110px;
-    }
-    .shape .shape2 #img2 {
-        position: absolute;
-        margin: 20px 0px 0px 165px;
-    }
-    .shape .shape2 #img3 {
-        position: absolute;
-        margin: -20px 0px 10px 200px;
-    }
-    .shape .shape3 #img1 {
-        position: absolute;
-        margin: 60px 0px 0px 110px;
-    }
-    .shape .shape3 #img2 {
-        position: absolute;
-        margin: 20px 0px 0px 165px;
-    }
-    .shape .shape3 #img3 {
-        position: absolute;
-        margin: -20px 0px 10px 200px;
-    }
-    .shape p {
-        position: absolute;
-        font-family: 'Airbnb Cereal App', sans-serif;
-        font-size: 16px;
-        margin: 45px 0 0 20px;
-    }
-    .shape h5 {
-        position: absolute;
-        font-family: 'Airbnb Cereal App', sans-serif;
-        font-size: 28px;
-        margin: 70px 0 0px 20px;
-        z-index: 1;
-        font-weight: 600;
-    }
-    .shape h4  {
-        position: absolute;
-        font-family: 'Airbnb Cereal App', sans-serif;
-        font-size: 18px;
-        margin: 110px 0 0px 20px;
-        font-weight: 500;
-    }
-    .shape #background {
-          position: absolute;
-        z-index: -1;
-        width: 105%;
-        height: 100%;
-    }
-    .chart img {
-      width: 91.6%;
-      float: right;
-      margin: 50% auto 4em;
-      z-index: 99;
-      border-top: #007BFF dotted 10px;
-      box-shadow: 0px 10px rgba(144, 144, 144, 400) 100%; 
-    } 
-    .chart img:focus {
-      border: solid 10px black;
-    }
+  }
+
+  .shape .shape1:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  .shape .shape2:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  .shape .shape3:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  .shape .shape1 {
+    filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
+    border-radius: 10px;
+    width: 30%;
+    height: 70%;
+    border: linear-gradient(278.29deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%) solid;
+  }
+
+  .shape .shape2 {
+    filter: drop-shadow(10px 15px 10px rgba(41, 223, 255, 0.25));
+    border-radius: 10px;
+    width: 30%;
+    height: 70%;
+    border: linear-gradient(278.29deg, #29DFFF 30.05%, rgba(41, 223, 255, 0) 133.19%) solid;
+  }
+
+  .shape .shape3 {
+    filter: drop-shadow(10px 15px 10px rgba(241, 201, 236, 0.75));
+    border-radius: 10px;
+    width: 30%;
+    height: 70%;
+    border: linear-gradient(278.29deg, #AB84C8 30.05%, rgba(241, 201, 236, 0) 133.19%) solid;
+  }
+
+  .shape img {
+    width: 50%;
+    height: 45%;
+    padding-top: -100px;
+  }
+
+  .shape .shape1 #img1 {
+    position: absolute;
+    margin: 60px 0px 0px 110px;
+  }
+
+  .shape .shape1 #img2 {
+    position: absolute;
+    margin: 10px 0px 0px 160px;
+  }
+
+  .shape .shape1 #img3 {
+    position: absolute;
+    margin: -20px 0px 10px 200px;
+  }
+
+  .shape .shape2 #img1 {
+    position: absolute;
+    margin: 60px 0px 0px 110px;
+  }
+
+  .shape .shape2 #img2 {
+    position: absolute;
+    margin: 20px 0px 0px 165px;
+  }
+
+  .shape .shape2 #img3 {
+    position: absolute;
+    margin: -20px 0px 10px 200px;
+  }
+
+  .shape .shape3 #img1 {
+    position: absolute;
+    margin: 60px 0px 0px 110px;
+  }
+
+  .shape .shape3 #img2 {
+    position: absolute;
+    margin: 20px 0px 0px 165px;
+  }
+
+  .shape .shape3 #img3 {
+    position: absolute;
+    margin: -20px 0px 10px 200px;
+  }
+
+  .shape p {
+    position: absolute;
+    font-family: 'Airbnb Cereal App', sans-serif;
+    font-size: 16px;
+    margin: 45px 0 0 20px;
+  }
+
+  .shape h5 {
+    position: absolute;
+    font-family: 'Airbnb Cereal App', sans-serif;
+    font-size: 28px;
+    margin: 70px 0 0px 20px;
+    z-index: 1;
+    font-weight: 600;
+  }
+
+  .shape h4 {
+    position: absolute;
+    font-family: 'Airbnb Cereal App', sans-serif;
+    font-size: 18px;
+    margin: 110px 0 0px 20px;
+    font-weight: 500;
+  }
+
+  .shape #background {
+    position: absolute;
+    z-index: -1;
+    width: 105%;
+    height: 100%;
+  }
+
+  .chart img {
+    width: 91.6%;
+    height: 35em;
+    float: right;
+    margin: 50% auto 42em;
+    z-index: 99;
+    border-top: #007BFF dotted 15px;
+    box-shadow: 0px 10px rgba(144, 144, 144, 400) 100%;
+    cursor: pointer;
+  }
+
+  .chart img:hover {
+    border: #ffffff groove 40px;
+  }
+  .data-history {
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    margin-top: 20px;
+  }
+  .data-history h5 {
+    font-weight: 400;
+    text-align: center;
+  }
+  .col {
+    text-align: center;
+  }
+  .wrap {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 16.5em;
+    background-color: #007BFF ;
+  }
 </style>

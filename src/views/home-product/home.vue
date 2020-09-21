@@ -39,7 +39,7 @@
     <div class="wrapper" id="header-cart">
       <div class="header-cart">
         <div class="title-cart">
-          <h2>Cart <span> {{ listCHart.length }} </span></h2>
+          <h2>Cart <span> {{ listcart.cartdata.length }} </span></h2>
         </div>
       </div>
     </div>
@@ -47,49 +47,49 @@
     <div class="wrapper-allcart">
       <div class=" overflow-auto" id="cart">
         <div class="cart-customer">
-          <div v-if="listCHart.length == 0">
+          <div v-if="listcart.cartdata.length == 0">
             <div class="cart"><img src="@/assets/food-and-restaurant.png"></div>
-            <div class="desc-cart" v-if="listCHart.length == 0">
+            <div class="desc-cart" v-if="listcart.cartdata.length == 0">
               <h2>You cart is empty</h2>
               <p>Please add some items from the menu</p>
             </div>
           </div>
-          <div v-if="listCHart.length >= 1" hidden>
+          <div v-if="listcart.cartdata.length >= 1" hidden>
             <div class="cart"><img src="@/assets/food-and-restaurant.png"></div>
-            <div class="desc-cart" v-if="listCHart.length >= 1" hidden>
+            <div class="desc-cart" v-if="listcart.cartdata.length >= 1" hidden>
               <h2>You cart is empty</h2>
               <p>Please add some items from the menu</p>
             </div>
           </div>
           <!-- cart -->
-          <div class="wrapper-cart" v-for="items in listCHart" :key="items">
+          <div class="wrapper-cart" v-for="cart in listcart.cartdata" :key="cart">
             <div class="cart1">
-              <img :src="items.IMG" id="cart-img">
+              <img :src="cart.IMG" id="cart-img">
             </div>
             <div class="cart2">
               <cart2-1>
-                <h4 style="font-size:22px; text-align:left;"> {{ items.NAME_PRODUCT}} </h4>
+                <h5 style="font-size:20px; text-align:left;"> {{ cart.NAME_PRODUCT}} </h5>
               </cart2-1>
               <div class="cart2-2">
                 <b-button-group>
-                  <b-button variant="success" style="font-weight: 900;" v-on:click='value -= 1'>-</b-button>
-                  <div class="form-control total" value="1"> {{ value }} </div>
-                  <b-button variant="success" style="font-weight: 900;" v-on:click='value += 1'>+</b-button>
+                  <b-button variant="success" style="font-weight: 900;" @click="removeQTY">-</b-button>
+                  <div class="form-control total" value="1" v-if="cart.ID"> {{ value }} </div>
+                  <b-button variant="success" style="font-weight: 900;" @click="addQTY" >+</b-button>
                 </b-button-group>
-                <h5 style="font-size:18px;margin-left: 50px;">{{ items.PRICE }}</h5>
+                 <h4 style="font-size:18px;margin-left: 50px;">Rp.{{new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(cart.PRICE)}}</h4>
               </div>
             </div>
           </div>
         </div>
       </div>
       <!-- CHECKOUT BUTTON -->
-      <div class="total-price" v-if="listCHart.length == 0">
+      <div class="total-price" v-if="listcart.cartdata.length == 0">
       </div>
       <div class="total-price" v-else>
         <h5>Total</h5>
-        <h4 style="margin-left:7em;">95000</h4>
+            <h4 style="margin-left:5em;">Rp.{{ listcart.total }}</h4>
       </div>
-      <div class="checkout" v-if="listCHart.length == 0" hidden>
+      <div class="checkout" v-if="listcart.cartdata.length == 0" hidden>
       </div>
       <div class="checkout" v-else>
         <b-button variant="outline-primary" @click="$bvModal.show('bv-modal-CheckOut')" style="margin-bottom:15px;font-size:20px;font-weight:700;">CheckOut
@@ -101,12 +101,19 @@
     <div class="wrapper" id="sidebar">
       <div class="sidebar">
         <div class="sidebar-action">
-          <div class="icon-menus"> <a href="http://localhost:8081/"><img src="@/assets/fork.png"><span>Menus</span></a>
+          <!-- Home -->
+          <div class="icon-menus"> 
+              <router-link v-bind:to="'/'"> 
+                <img src="@/assets/fork.png"><span>Menus</span>
+              </router-link>
           </div>
                 <!-- HISTORY -->
-          <div class="icon-history"> <a href= 'http://localhost:8081/#/history'><img
-                src="@/assets/clipboard.png"><span>History</span></a></div>
-
+          <div class="icon-history"> 
+            <router-link v-bind:to="'/history'"> 
+                <img src="@/assets/clipboard.png"> 
+                <span>History</span> 
+            </router-link> 
+          </div>
                 <!-- MODAL C. R. U. D -->
           <div><img src="@/assets/add.png" @click="$bvModal.show('CRUD')">
             <b-modal id="CRUD" hide-footer header-border-variant="primary"><template v-slot:modal-title>
@@ -127,6 +134,28 @@
               </b-button>
             </b-modal>
           </div>
+           <!-- USER INFORMATION -->
+          <div class="icon-userinfo">
+              <img src="@/assets/meetme.png" @click="$bvToast.show('my-toast')" style="margin-top:5.5em">
+              <b-toast id="my-toast" variant="primary" solid>
+                  <template v-slot:toast-title>
+                     <div class="d-flex flex-grow-1 align-items-baseline">
+                        <b-img blank blank-color="#fff" class="mr-2" width="14" height="14"></b-img>
+                        <strong class="mr-auto">Notice!</strong>
+                        <small class="text-muted mr-2">TOKEN USER</small>
+                     </div>
+                  </template>
+                  <div class="body-info">
+                    <h5>hello welcome to coffee shop.</h5>
+                    <p>your information token access:</p>
+                    <div class="hideToken">
+                        <h5> {{tokenInfo}} </h5>
+                    </div>
+                    <img src="@/assets/exit.png" 
+                         style="width:8em; height:8em; display:block; margin:-1.5em auto 1em; cursor:pointer;" @click="logout()">
+                </div>
+             </b-toast>     
+          </div>
         </div>
       </div>
     </div>
@@ -136,7 +165,16 @@
         <Product :images="data.IMG" :names="data.NAME_PRODUCT" :price="data.PRICE" />
       </div>
     </b-row>
-    <!-- modal Add Data -->
+    <!-- AUTHENTICATION -->
+    <b-modal id="auth" hide-footer title="Authentication coffee shop">
+      <div class="d-block text-center">
+        <h3>C.R.U.D <code><i>Not access!</i></code></h3>
+      </div>
+      <b-form-input v-model="token" class="mt-3" type="text" placeholder="type your token access"></b-form-input>
+      <b-button class="mt-5" variant="primary" block @click="checkToken()"> <h5>Check token</h5></b-button>
+      <b-button class="mt-2" variant="outline-danger" block @click="$bvModal.hide('auth')"><h5>Cancel</h5> </b-button>
+    </b-modal>
+    <!-- MODAL ADD PRODUCT -->
     <b-modal id="bv-modal-AddData" size="lg" header-bg-variant="primary" header-text-variant="white"
       header-border-variant="dark" footer-border-variant="dark"><template v-slot:modal-title>
         <h2>Add Product </h2>
@@ -144,7 +182,7 @@
         <b-button variant="outline-danger" @click="clean">
           <h5>Cancel</h5>
         </b-button>
-        <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="save">
+        <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="save()">
           <h5 style="font-weight:700;">Add</h5>
         </b-button>
       </template>
@@ -179,7 +217,7 @@
         <b-button variant="outline-danger" @click="clean">
           <h5>Cancel</h5>
         </b-button>
-        <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="Update">
+        <b-button variant="primary" style="width:16em; margin:0 25px 0 15px;" @click="Update()">
           <h5 style="font-weight:700;">Update</h5>
         </b-button>
       </template>
@@ -222,7 +260,7 @@
           <b-form-input v-model="deleteID"></b-form-input>
         </b-input-group>
       </div>
-      <b-button variant="outline-danger" class="mt-3" block @click="Delete"
+      <b-button variant="outline-danger" class="mt-3" block @click="Delete()"
         style="width:15em;display:block; margin:20px auto;">
         <h4>Delete </h4>
       </b-button>
@@ -238,8 +276,8 @@
          </div>
         </template>
           <div class="checkout-list overflow-auto" block style="height:15em; margin-bottom:30px;">
-            <div class="list" v-for="items in listCHart" :key="items">
-                <div class="menu1" style="margin-top:15px;">
+            <div class="list" v-for="items in listcart.cartdata" :key="items">
+                <div  class="menu1" style="margin-top:15px;">
                   <h5>{{items.NAME_PRODUCT}}</h5>
                 </div>
                 <div class="menu2" style="margin-top:15px;">
@@ -249,13 +287,13 @@
           </div>
           <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-end;">
               <h5 >total:</h5>
-              <h5 style="padding-right: 20px; padding-left: 50px;">Rp. 95000</h5>
+              <h5 style="padding-right: 20px; padding-left: 50px;">{{ listcart.total }}</h5>
           </div>
            <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-start;">
               <h5>payment: <code>Cash</code></h5>
           </div>
         <div style="margin-top:-2em;">
-        <b-button variant=outline-danger class="mt-5" block @click="$bvModal.hide('bv-modal-example')"><h5> Print</h5></b-button>
+        <b-button variant=outline-danger class="mt-5" block @click="print"><h5> Print</h5></b-button>
         <b-button variant=primary class="mt-2" block @click="$bvModal.hide('bv-modal-example')"> <h5>Send Email </h5></b-button>
         </div>
       </b-modal>
@@ -266,16 +304,18 @@
   import Product from '../../components/product'
   import axios from 'axios'
   
-
   export default {
     name: 'product',
     components: {
       Product,
     },
-    data() {
+    data()  {
       return {
         product: [],
-        listCHart: [],
+        listcart: {
+          cartdata : [],
+          total : 0,
+        },
         search: '',
         selected: null,
         options: [{
@@ -302,7 +342,7 @@
         ],
         form: {
           NAME_PRODUCT: '',
-          PRICE: '',
+          PRICE: 2000,
           IMG: '',
           CATEGORY: ''
         },
@@ -315,10 +355,24 @@
           CATEGORY: ''
         },
         deleteID: '',
-      }
+        addHistory: {
+          CASHIER : [],
+          DATE : [],
+          ORDERS: [],
+          AMOUNT: []
+        },
+        token: '',
+        tokenInfo: ''
+     }
     },
     mounted() {
       this.load()
+      axios.get('http://localhost:2150/users')
+        .then((result) => {
+          this.tokenInfo = result.data.result[0].token
+        }).catch((err) => {
+          console.log(err)
+        });
     },
     methods: {
       load() {
@@ -326,12 +380,11 @@
         .then((res) => {
           this.product = res.data
         }).catch((err) => {
-          console.log(process.env.VUE_APP_URL)
           alert('Product not found!, pls contact admin!', err)
         })
       },
       sortby() {
-          axios.get(`${process.env.VUE_APP_URL}/filterby?sort=${event.target.value}`)
+        axios.get(`${process.env.VUE_APP_URL}/filterby?sort=${event.target.value}`)
           .then((result) => {
             this.product = result.data
           }).catch((err) => {
@@ -339,16 +392,32 @@
           });
         },
       save() {
-        axios.post(process.env.VUE_APP_URL,
-          this.form).then((res) => {
-          alert('Product Sucessfully Saved!', res)
+        axios.post(process.env.VUE_APP_URL,this.form)
+        .then((res) => {
           this.load()
           this.form = []
           this.clean()
+          alert('Product Sucessfully Saved!', res)
         }).catch(err => {
           alert('Data Error!' + err)
         })
       },
+      print(){
+        let cashier = this.addHistory.CASHIER.toString()
+         let date = this.addHistory.DATE.toString()
+          let orders = this.addHistory.ORDERS.toString()
+           let amount= this.addHistory.AMOUNT.toString()
+        for(let i = 1; i <= this.addHistory.AMOUNT.length;i++){
+          axios.post('http://localhost:2150/history', {
+            cashier : cashier.split(','),
+            date : date.split(','),
+            orders : orders.split(','),
+            amount : amount.split(',')
+          })
+        }
+        alert('Terimakasih telah berbelanja!')
+      },
+ 
       Update() {
         axios.put(process.env.VUE_APP_URL, {
             ID: this.update.ID,
@@ -383,20 +452,57 @@
         this.$bvModal.hide('bv-modal-AddData')
         this.$bvModal.hide('bv-modal-UpdateData')
         this.$bvModal.hide('bv-modal-DeleteData')
-        this.listCHart = []
+        this.listcart.cartdata = []
         this.form = []
       },
       addCart(data) {
-        this.listCHart.push(data)
+        this.listcart.cartdata.push(data)
+        this.listcart.total += Number(data.PRICE)
+        this.addHistory.AMOUNT.push(data.PRICE)
+        this.addHistory.CASHIER.push('adityaudi')
+        this.addHistory.DATE.push('Rabu 22 aug 2020')
+        this.addHistory.ORDERS.push(data.NAME_PRODUCT)
       },
-       searching(){
-          axios.get(`${process.env.VUE_APP_URL}/search?name=${this.search}`)
-          .then(res => {
+      searching(){
+         axios.get(`${process.env.VUE_APP_URL}/search?name=${this.search}`)
+        .then(res => {  
             this.product = res.data
         }).catch ( err => {
           this.product = [], err
         })
       },
+      addQTY(){
+          this.value += 1
+          this.listcart.total = this.listcart.cartdata[0].PRICE * this.value
+      },
+      removeQTY(){
+        if (this.value > 1){
+            this.value -= 1
+            this.listcart.total = this.listcart.cartdata[0].PRICE * this.value
+        }else {
+          this.listcart.cartdata = []
+        }
+      },
+      checkToken(){
+        if(this.token != ""){
+          axios.delete(`${process.env.VUE_APP_URL}/delete/${this.deleteID}`, {
+            token : this.token
+          })
+            this.$bvModal.hide('auth')
+            this.Delete()
+            this.token = ''
+        }else {
+          alert('token column is not filled!')
+        }
+      },
+      logout(){
+        this.$bvToast.toast(
+          alert('Logout berhasil, Sampai Jumpa!'),
+          this.$router.replace({ name : "login"}),
+          this.$bvToast.hide('my-toast'),
+          this.tokenInfo = ''
+        )
+      }
     }
   }
 </script>
@@ -472,12 +578,12 @@
 
   .sidebar {
     width: 4em;
+    height: 39em;
     background-color: white;
     padding-top: 7em;
     margin-left: 1.5em;
     padding-bottom: 12em;
     border-radius: 8px;
-    /* border: 1px gray solid; */
     border-bottom: #007BFF solid;
     box-shadow: 10px 10px rgba(144, 144, 144, 0.212);
     position: fixed;
@@ -509,6 +615,10 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: -10px 10px rgba(144, 144, 144, 0.212);
+  }
+  .sidebar .icon-userinfo img{
+    width: 100px;
+    height: 100px;
   }
 
   #cart {
@@ -621,5 +731,11 @@
      display: flex;
      flex-direction: row;
      justify-content: space-between;
+   }
+   .hideToken {
+     overflow-x: auto;
+     overflow-y: hidden;
+     background-color: white;
+     margin: 1.5em auto 3em;
    }
 </style>

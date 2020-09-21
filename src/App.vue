@@ -1,13 +1,20 @@
 <template>
   <div id="app">
-      <router-view> </router-view>
+       <div id="app">
+        <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'App', 
+  name: 'App',
+  mounted() {
+            if(!this.authenticated) {
+                this.$router.replace({ name: "login" });
+            }
+        },
 }
 </script>
 
