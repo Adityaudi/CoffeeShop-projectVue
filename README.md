@@ -1,7 +1,7 @@
 # project-coffee
 
 <p align="center">
-  <img width="460" height="300" src="http://www.fillmurray.com/460/300">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/logo.png">
 </p>
 
 
