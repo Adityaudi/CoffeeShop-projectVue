@@ -1,7 +1,35 @@
-# project-coffee
+# Coffee Shop Project
 
 <p align="center">
   <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/logo.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/login.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/auth.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/homePage.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/Authcrud.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/addProduct.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/updateProduct.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/deleteProduct.png">
 </p>
 
 
