@@ -32,6 +32,23 @@
   <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/deleteProduct.png">
 </p>
 
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/cart.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/history.png">
+</p>
+
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/RecentOrder.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/handling.png">
+</p>
+
 
 ## Project setup
 ```
