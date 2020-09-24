@@ -19,20 +19,20 @@
         </div>
         <div class="icon-search">
           <form>
-              <div>
-               <input v-model="search"  type="text" name="search" placeholder="Search.." @input="searching()" >
-              </div>
-               <div>
-                     <b-dropdown size='sm' offset="-100" style="margin-left:5px; height:50px;" variant='outline-primary'>
-                            <select name="category_id" @click="sortby()" class="form-control">
-                              <option selected disabled>sort by:</option>
-                              <option value="ID">Id</option>
-                              <option value="NAME_PRODUCT">Name</option>
-                              <option value="PRICE">Price</option>
-                            </select>
-                    </b-dropdown>  
-                </div>
-        </form>
+            <div>
+              <input v-model="search" type="text" name="search" placeholder="Search.." @input="searching()">
+            </div>
+            <div>
+              <b-dropdown size='sm' offset="-100" style="margin-left:5px; height:50px;" variant='outline-primary'>
+                <select name="category_id" @click="sortby()" class="form-control">
+                  <option selected disabled>sort by:</option>
+                  <option value="ID">Id</option>
+                  <option value="NAME_PRODUCT">Name</option>
+                  <option value="PRICE">Price</option>
+                </select>
+              </b-dropdown>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -74,9 +74,10 @@
                 <b-button-group>
                   <b-button variant="success" style="font-weight: 900;" @click="removeQTY">-</b-button>
                   <div class="form-control total" value="1" v-if="cart.ID"> {{ value }} </div>
-                  <b-button variant="success" style="font-weight: 900;" @click="addQTY" >+</b-button>
+                  <b-button variant="success" style="font-weight: 900;" @click="addQTY">+</b-button>
                 </b-button-group>
-                 <h4 style="font-size:18px;margin-left: 50px;">Rp.{{new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(cart.PRICE)}}</h4>
+                <h4 style="font-size:18px;margin-left: 50px;">
+                  Rp.{{new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(cart.PRICE)}}</h4>
               </div>
             </div>
           </div>
@@ -87,12 +88,13 @@
       </div>
       <div class="total-price" v-else>
         <h5>Total</h5>
-            <h4 style="margin-left:5em;">Rp.{{ listcart.total }}</h4>
+        <h4 style="margin-left:5em;">Rp.{{ listcart.total }}</h4>
       </div>
       <div class="checkout" v-if="listcart.cartdata.length == 0" hidden>
       </div>
       <div class="checkout" v-else>
-        <b-button variant="outline-primary" @click="$bvModal.show('bv-modal-CheckOut')" style="margin-bottom:15px;font-size:20px;font-weight:700;">CheckOut
+        <b-button variant="outline-primary" @click="$bvModal.show('bv-modal-CheckOut')"
+          style="margin-bottom:15px;font-size:20px;font-weight:700;">CheckOut
         </b-button>
         <b-button variant="danger" @click="clean" style="font-size:20px;font-weight:700;">Cancel</b-button>
       </div>
@@ -102,20 +104,20 @@
       <div class="sidebar">
         <div class="sidebar-action">
           <!-- Home -->
-          <div class="icon-menus"> 
-              <router-link v-bind:to="'/'"> 
-                <img src="@/assets/fork.png"><span>Menus</span>
-              </router-link>
+          <div class="icon-menus">
+            <router-link v-bind:to="'/home'">
+              <img src="@/assets/fork.png"><span>Menus</span>
+            </router-link>
           </div>
-                <!-- HISTORY -->
-          <div class="icon-history"> 
-            <router-link v-bind:to="'/history'"> 
-                <img src="@/assets/clipboard.png"> 
-                <span>History</span> 
-            </router-link> 
+          <!-- HISTORY -->
+          <div class="icon-history">
+            <router-link v-bind:to="'/history'">
+              <img src="@/assets/clipboard.png">
+              <span>History</span>
+            </router-link>
           </div>
-                <!-- MODAL C. R. U. D -->
-          <div><img src="@/assets/add.png" @click="$bvModal.show('CRUD')">
+          <!-- MODAL C. R. U. D -->
+          <div><img src="@/assets/add.png" @click="$bvModal.show('auth')">
             <b-modal id="CRUD" hide-footer header-border-variant="primary"><template v-slot:modal-title>
                 <h3>CoffeeShop <code>CRUD</code></h3>
               </template>
@@ -134,27 +136,28 @@
               </b-button>
             </b-modal>
           </div>
-           <!-- USER INFORMATION -->
+          <!-- USER INFORMATION -->
           <div class="icon-userinfo">
-              <img src="@/assets/meetme.png" @click="$bvToast.show('my-toast')" style="margin-top:5.5em">
-              <b-toast id="my-toast" variant="primary" solid>
-                  <template v-slot:toast-title>
-                     <div class="d-flex flex-grow-1 align-items-baseline">
-                        <b-img blank blank-color="#fff" class="mr-2" width="14" height="14"></b-img>
-                        <strong class="mr-auto">Notice!</strong>
-                        <small class="text-muted mr-2">TOKEN USER</small>
-                     </div>
-                  </template>
-                  <div class="body-info">
-                    <h5>hello welcome to coffee shop.</h5>
-                    <p>your information token access:</p>
-                    <div class="hideToken">
-                        <h5> {{tokenInfo}} </h5>
-                    </div>
-                    <img src="@/assets/exit.png" 
-                         style="width:8em; height:8em; display:block; margin:-1.5em auto 1em; cursor:pointer;" @click="logout()">
+            <img src="@/assets/meetme.png" @click="$bvToast.show('my-toast')" style="margin-top:5.5em">
+            <b-toast id="my-toast" variant="primary" solid>
+              <template v-slot:toast-title>
+                <div class="d-flex flex-grow-1 align-items-baseline">
+                  <b-img blank blank-color="#fff" class="mr-2" width="14" height="14"></b-img>
+                  <strong class="mr-auto">Notice!</strong>
+                  <small class="text-muted mr-2">TOKEN USER</small>
                 </div>
-             </b-toast>     
+              </template>
+              <div class="body-info">
+                <h5>hello welcome to coffee shop.</h5>
+                <p>your information token access:</p>
+                <div class="hideToken">
+                  <h5> {{ tokenInfo }} </h5>
+                </div>
+                <img src="@/assets/exit.png"
+                  style="width:8em; height:8em; display:block; margin:-1.5em auto 1em; cursor:pointer;"
+                  @click="logout()">
+              </div>
+            </b-toast>
           </div>
         </div>
       </div>
@@ -171,8 +174,12 @@
         <h3>C.R.U.D <code><i>Not access!</i></code></h3>
       </div>
       <b-form-input v-model="token" class="mt-3" type="text" placeholder="type your token access"></b-form-input>
-      <b-button class="mt-5" variant="primary" block @click="checkToken()"> <h5>Check token</h5></b-button>
-      <b-button class="mt-2" variant="outline-danger" block @click="$bvModal.hide('auth')"><h5>Cancel</h5> </b-button>
+      <b-button class="mt-5" variant="primary" block @click="checkToken()">
+        <h5>Check token</h5>
+      </b-button>
+      <b-button class="mt-2" variant="outline-danger" block @click="$bvModal.hide('auth')">
+        <h5>Cancel</h5>
+      </b-button>
     </b-modal>
     <!-- MODAL ADD PRODUCT -->
     <b-modal id="bv-modal-AddData" size="lg" header-bg-variant="primary" header-text-variant="white"
@@ -267,34 +274,49 @@
     </b-modal>
     <!-- MODAL CHECKOUT USER -->
     <div>
-      <b-modal id="bv-modal-CheckOut" hide-footer header-bg-variant= "primary">
+      <b-modal id="bv-modal-CheckOut" hide-footer header-bg-variant="primary">
         <template v-slot:modal-title>
-         <h2 style="color:white;">Checkout</h2>
-  
-         <div class="cashier" style="display:flex; flex-direction:row; color:white;"> 
-             <p style="margin-right:10px; margin-bottom:-10px;"> Cashier : <span>adityaUdi</span></p>
-         </div>
+          <h2 style="color:white;">Checkout</h2>
+
+          <div class="cashier" style="display:flex; flex-direction:row; color:white;">
+            <p style="margin-right:10px; margin-bottom:-10px;"> Cashier : <span>adityaUdi</span></p>
+          </div>
         </template>
-          <div class="checkout-list overflow-auto" block style="height:15em; margin-bottom:30px;">
-            <div class="list" v-for="items in listcart.cartdata" :key="items">
-                <div  class="menu1" style="margin-top:15px;">
-                  <h5>{{items.NAME_PRODUCT}}</h5>
-                </div>
-                <div class="menu2" style="margin-top:15px;">
-                    <h5>Rp. {{items.PRICE}}</h5>
-                </div>
+        <div class="checkout-list overflow-auto" block style="height:15em; margin-bottom:30px;">
+          <div class="list" v-for="items in listcart.cartdata" :key="items">
+            <div class="menu1" style="margin-top:15px;">
+              <h5>{{items.NAME_PRODUCT}}</h5>
+            </div>
+            <div class="menu2" style="margin-top:15px;">
+              <h5>Rp. {{items.PRICE}}</h5>
             </div>
           </div>
-          <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-end;">
-              <h5 >total:</h5>
-              <h5 style="padding-right: 20px; padding-left: 50px;">{{ listcart.total }}</h5>
-          </div>
-           <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-start;">
-              <h5>payment: <code>Cash</code></h5>
-          </div>
+        </div>
+        <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-end;">
+          <h5>total:</h5>
+          <h5 style="padding-right: 20px; padding-left: 50px;">{{ listcart.total }}</h5>
+        </div>
+        <div class="total-list" style="display:flex; flex-direction:row; justify-content:flex-start;">
+          <h5>payment: <code>Cash</code></h5>
+        </div>
         <div style="margin-top:-2em;">
-        <b-button variant=outline-danger class="mt-5" block @click="print"><h5> Print</h5></b-button>
-        <b-button variant=primary class="mt-2" block @click="$bvModal.hide('bv-modal-example')"> <h5>Send Email </h5></b-button>
+          <b-button variant=outline-danger class="mt-5" block @click="print">
+            <h5> Print</h5>
+          </b-button>
+          <b-button variant=primary class="mt-2" block @click="$bvModal.hide('bv-modal-example')">
+            <h5>Send Email </h5>
+          </b-button>
+        </div>
+      </b-modal>
+    </div>
+    <!-- MODAL AUTH TOKEN -->
+    <div>
+      <b-modal id="modal-auth" hide-footer hide-header-close no-close-on-esc no-close-on-backdrop
+        title="Coffee Shop AUTHENTICATION">
+        <h5><code>PLEASE CHECK YOUR TOKEN ON LOGIN.</code> </h5>
+        <div class="body" style="display:flex; flex-direction:row;">
+          <b-input v-model="tokenUser" placeholder="Token..." style="width:90%; margin-top:5px;"></b-input>
+          <h5 style="padding:10px 15px;cursor:pointer;" @click="next()"><i> NEXT</i></h5>
         </div>
       </b-modal>
     </div>
@@ -303,18 +325,18 @@
 <script>
   import Product from '../../components/product'
   import axios from 'axios'
-  
+
   export default {
     name: 'product',
     components: {
       Product,
     },
-    data()  {
+    data() {
       return {
         product: [],
         listcart: {
-          cartdata : [],
-          total : 0,
+          cartdata: [],
+          total: 0,
         },
         search: '',
         selected: null,
@@ -342,7 +364,7 @@
         ],
         form: {
           NAME_PRODUCT: '',
-          PRICE: 2000,
+          PRICE: 0,
           IMG: '',
           CATEGORY: ''
         },
@@ -356,32 +378,41 @@
         },
         deleteID: '',
         addHistory: {
-          CASHIER : [],
-          DATE : [],
+          CASHIER: 'adityaudi',
+          DATE: 'Kamis 22 Sep 2020',
           ORDERS: [],
-          AMOUNT: []
+          AMOUNT: 0
         },
         token: '',
-        tokenInfo: ''
-     }
+        tokenInfo: '',
+        tokenUser: ''
+      }
     },
     mounted() {
       this.load()
-      axios.get('http://localhost:2150/users')
-        .then((result) => {
-          this.tokenInfo = result.data.result[0].token
-        }).catch((err) => {
-          console.log(err)
-        });
     },
     methods: {
       load() {
-        axios.get(process.env.VUE_APP_URL)
-        .then((res) => {
-          this.product = res.data
-        }).catch((err) => {
-          alert('Product not found!, pls contact admin!', err)
-        })
+        this.$bvModal.show('modal-auth')
+      },
+      next() {
+        if (this.tokenUser != "") {
+          axios.get(process.env.VUE_APP_URL, {
+              token: this.tokenUser
+            })
+            .then((result) => {
+              this.$bvModal.hide('modal-auth')
+              this.tokenInfo = this.tokenUser
+              this.product = result.data
+              this.tokenUser = ''
+              console.log(result)
+            })
+            .catch((error) => {
+              alert('Token: Invalid token!', error)
+            });
+        } else {
+          alert('token column is not filled!')
+        }
       },
       sortby() {
         axios.get(`${process.env.VUE_APP_URL}/filterby?sort=${event.target.value}`)
@@ -390,34 +421,22 @@
           }).catch((err) => {
             alert('erorr', err)
           });
-        },
-      save() {
-        axios.post(process.env.VUE_APP_URL,this.form)
-        .then((res) => {
-          this.load()
-          this.form = []
-          this.clean()
-          alert('Product Sucessfully Saved!', res)
-        }).catch(err => {
-          alert('Data Error!' + err)
-        })
       },
-      print(){
-        let cashier = this.addHistory.CASHIER.toString()
-         let date = this.addHistory.DATE.toString()
-          let orders = this.addHistory.ORDERS.toString()
-           let amount= this.addHistory.AMOUNT.toString()
-        for(let i = 1; i <= this.addHistory.AMOUNT.length;i++){
-          axios.post('http://localhost:2150/history', {
-            cashier : cashier.split(','),
-            date : date.split(','),
-            orders : orders.split(','),
-            amount : amount.split(',')
+      save() {
+        axios.post(process.env.VUE_APP_URL + '/add', this.form)
+          .then((res) => {
+            this.form = []
+            this.clean()
+            alert('Product Sucessfully Saved!', res)
+          }).catch(err => {
+            alert('Data Error!' + err)
           })
-        }
+      },
+      print() {
+        axios.post(process.env.VUE_APP_URL_HISTORY, this.addHistory)
         alert('Terimakasih telah berbelanja!')
       },
- 
+
       Update() {
         axios.put(process.env.VUE_APP_URL, {
             ID: this.update.ID,
@@ -428,7 +447,6 @@
           })
           .then((res) => {
             alert('Product was Updated!', res)
-            this.load()
             this.form = []
             this.clean()
           })
@@ -440,7 +458,6 @@
         axios.delete(`${process.env.VUE_APP_URL}/delete/${this.deleteID}`)
           .then(res => {
             alert("Success delete product", res)
-            this.load()
             this.form = []
             this.clean()
           })
@@ -458,51 +475,57 @@
       addCart(data) {
         this.listcart.cartdata.push(data)
         this.listcart.total += Number(data.PRICE)
-        this.addHistory.AMOUNT.push(data.PRICE)
-        this.addHistory.CASHIER.push('adityaudi')
-        this.addHistory.DATE.push('Rabu 22 aug 2020')
         this.addHistory.ORDERS.push(data.NAME_PRODUCT)
+        this.addHistory.AMOUNT += Number(data.PRICE)
       },
-      searching(){
-         axios.get(`${process.env.VUE_APP_URL}/search?name=${this.search}`)
-        .then(res => {  
+      searching() {
+        axios.get(`${process.env.VUE_APP_URL}/search?name=${this.search}`)
+          .then(res => {
             this.product = res.data
-        }).catch ( err => {
-          this.product = [], err
-        })
+          }).catch(err => {
+            this.product = [], err
+          })
       },
-      addQTY(){
-          this.value += 1
+      addQTY() {
+        this.value += 1
+        this.listcart.total = this.listcart.cartdata[0].PRICE * this.value
+      },
+      removeQTY() {
+        if (this.value > 1) {
+          this.value -= 1
           this.listcart.total = this.listcart.cartdata[0].PRICE * this.value
-      },
-      removeQTY(){
-        if (this.value > 1){
-            this.value -= 1
-            this.listcart.total = this.listcart.cartdata[0].PRICE * this.value
-        }else {
+        } else {
           this.listcart.cartdata = []
         }
       },
-      checkToken(){
-        if(this.token != ""){
-          axios.delete(`${process.env.VUE_APP_URL}/delete/${this.deleteID}`, {
-            token : this.token
-          })
-            this.$bvModal.hide('auth')
-            this.Delete()
-            this.token = ''
-        }else {
+      checkToken() {
+        if (this.token != "") {
+          axios.post(process.env.VUE_APP_URL, {
+              token: this.token
+            })
+            .then((result) => {
+              this.$bvModal.hide('auth')
+              this.$bvModal.show('CRUD')
+              this.token = ''
+              console.log(result)
+            })
+            .catch((err) => {
+              alert('Token invalid, pls call admin to access myCRUD!', err)
+            });
+        } else {
           alert('token column is not filled!')
         }
       },
-      logout(){
+      logout() {
         this.$bvToast.toast(
           alert('Logout berhasil, Sampai Jumpa!'),
-          this.$router.replace({ name : "login"}),
+          this.$router.replace({
+            name: "login"
+          }),
           this.$bvToast.hide('my-toast'),
           this.tokenInfo = ''
         )
-      }
+      },
     }
   }
 </script>
@@ -616,7 +639,8 @@
     border-radius: 8px;
     box-shadow: -10px 10px rgba(144, 144, 144, 0.212);
   }
-  .sidebar .icon-userinfo img{
+
+  .sidebar .icon-userinfo img {
     width: 100px;
     height: 100px;
   }
@@ -697,14 +721,16 @@
     margin-top: 1em;
     margin-left: 30px;
   }
+
   form {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
   }
+
   form input[type=text] {
-     width: 130px;
+    width: 130px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -718,24 +744,34 @@
     -webkit-transition: width 0.2s ease-in-out;
     transition: width 0.6s ease-in-out;
     float: right;
-   }
-      form input[type=text]:focus {
-      width: 100%;
-   }
-   .checkout-list {
-     display: flex;
-     flex-direction: column;
-     
-   }
-   .list {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-between;
-   }
-   .hideToken {
-     overflow-x: auto;
-     overflow-y: hidden;
-     background-color: white;
-     margin: 1.5em auto 3em;
-   }
+  }
+
+  form input[type=text]:focus {
+    width: 100%;
+  }
+
+  .checkout-list {
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .hideToken {
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: white;
+    margin: 1.5em auto 3em;
+  }
+
+  #modal-auth .body h5:hover {
+    background-color: #007BFF;
+    color: white;
+    margin-left: 10px;
+  }
 </style>

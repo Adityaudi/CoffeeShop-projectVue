@@ -26,7 +26,7 @@
         <div class="sidebar">
           <div class="sidebar-action">
             <div class="icon-menus">
-              <router-link v-bind:to="'/'">
+              <router-link v-bind:to="'/home'">
                 <img src="@/assets/fork.png"><span style="color:black;">Menus</span>
               </router-link>
             </div>
@@ -46,9 +46,9 @@
                   <p style="float:left;">Change page:</p>
                 </div>
                 <b-button variant="outline-primary" block class="mt-3">
-                  <router-link v-bind:to="'/'"> 
-                        <h5 id="home">HOME</h5>
-                  </router-link>  
+                  <router-link v-bind:to="'/'">
+                    <h5 id="home">HOME</h5>
+                  </router-link>
                 </b-button>
                 <b-button variant="danger" block class="mt-3" @click="$bvModal.hide('CRUD')">
                   <h5>Close</h5>
@@ -125,23 +125,23 @@
             </div>
           </div>
           <div class="wrap">
-          <div class="row data-history" v-for="items in history" :key="items.ID">
-            <div class="col">
-              <h5>#{{ items.invoices }}</h5>
+            <div class="row data-history" v-for="items in history" :key="items.ID">
+              <div class="col">
+                <h5>#{{ items.invoices }}</h5>
+              </div>
+              <div class="col">
+                <h5>{{ items.Cashier }}</h5>
+              </div>
+              <div class="col">
+                <h5>{{ items.date }}</h5>
+              </div>
+              <div class="col">
+                <h5>{{items.orders}}</h5>
+              </div>
+              <div class="col">
+                <h5>{{items.amount}}</h5>
+              </div>
             </div>
-            <div class="col">
-              <h5>{{ items.Cashier }}</h5>
-            </div>
-            <div class="col">
-              <h5>{{ items.date }}</h5>
-            </div>
-            <div class="col">
-              <h5>{{items.orders}}</h5>
-            </div>
-            <div class="col">
-              <h5>{{items.amount}}</h5>
-            </div>
-          </div>
           </div>
         </div>
       </div>
@@ -151,27 +151,27 @@
 
 <script>
   import axios from "axios";
-export default {
-  name: "History",
-  data: function () {
-    return {
-      history: [],
-    };
-  },
-  methods: {
-    getHistory: function () {
-      axios
-        .get("http://localhost:2150/history")
-        .then((res) => {
-          this.history = res.data;
-        })
-        .catch((err) => alert(err.message));
+  export default {
+    name: "History",
+    data: function () {
+      return {
+        history: [],
+      };
     },
-  },
-  mounted() {
-    this.getHistory();
-  },
-};
+    methods: {
+      getHistory: function () {
+        axios
+          .get(process.env.VUE_APP_URL_HISTORY)
+          .then((res) => {
+            this.history = res.data;
+          })
+          .catch((err) => alert(err.message));
+      },
+    },
+    mounted() {
+      this.getHistory();
+    },
+  };
 </script>
 
 <style>
@@ -181,9 +181,11 @@ export default {
     background-color: #007BFe;
 
   }
-  .container {  
+
+  .container {
     z-index: -10000;
   }
+
   .header {
     background-color: white;
     width: 100%;
@@ -391,22 +393,26 @@ export default {
   .chart img:hover {
     border: #ffffff groove 40px;
   }
+
   .data-history {
     background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     margin-top: 20px;
   }
+
   .data-history h5 {
     font-weight: 400;
     text-align: center;
   }
+
   .col {
     text-align: center;
   }
+
   .wrap {
     overflow-x: hidden;
     overflow-y: auto;
     height: 16.5em;
-    background-color: #007BFF ;
+    background-color: #007BFF;
   }
 </style>
