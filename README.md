@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/updateProduct.png">
+  <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/editProduct.png">
 </p>
 
 <p align="center">
