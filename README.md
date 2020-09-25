@@ -1,10 +1,14 @@
 # Coffee Shop Project
 
+
 <p align="center">
   <img src="https://github.com/Adityaudi/CoffeeShop-projectVue/blob/master/src/doc/logo.png">
 </p>
 
 ## Coffee shop applications made with the Backend are expressJS, NodeJs, Multer, Redis, Json Web Token, Bcrypt npm to hash passwords. and the postgree SQL database with its infrastructure: the Nginx web server. & The frontend uses Vue JS with the help of a little HTML CSS and animate search.
+
+### Visit us my apps : [Click Me.](http://52.91.116.229/CoffeeShopApps)
+
 
 ### My fiture apps web:
 <p align="center">
